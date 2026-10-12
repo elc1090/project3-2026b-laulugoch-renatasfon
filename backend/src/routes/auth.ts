@@ -11,14 +11,24 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 router.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body ?? {};
+    const { nomeEmpresa, email, password } = req.body ?? {};
 
-    if (typeof email !== "string" || typeof password !== "string") {
-      res.status(400).json({ error: "E-mail e senha são obrigatórios" });
+    if (typeof nomeEmpresa !== "string" || typeof email !== "string" || typeof password !== "string") {
+      res.status(400).json({ error: "Todos os campos são obrigatórios" });
+      return;
+    }
+    
+    const normalizedNome = nomeEmpresa.trim();
+
+    if (normalizedNome.length === 0 || normalizedNome.length > 150) {
+      res.status(400).json({
+        error: "O nome da empresa deve ter entre 1 e 150 caracteres",
+      });
       return;
     }
 
     const normalizedEmail = email.trim().toLowerCase();
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (
       normalizedEmail.length === 0 ||
@@ -48,8 +58,8 @@ router.post("/register", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 12);
 
     const user = await prisma.user.create({
-      data: { email: normalizedEmail, passwordHash },
-      select: { id: true, email: true, createdAt: true },
+      data: { nomeEmpresa: normalizedNome, email: normalizedEmail, passwordHash },
+      select: { id: true, nomeEmpresa: true,email: true, createdAt: true },
     });
 
     res.status(201).json({
@@ -109,7 +119,7 @@ router.post("/login", async (req, res) => {
 
     res.json({
       message: "Login realizado com sucesso",
-      user: { id: user.id, email: user.email, createdAt: user.createdAt },
+      user: { id: user.id, nomeEmpresa: user.nomeEmpresa, email: user.email, createdAt: user.createdAt },
       token: signToken(user.id),
     });
   } catch (error) {
@@ -122,7 +132,7 @@ router.get("/me", requireAuth, async (_req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: res.locals.userId },
-      select: { id: true, email: true, createdAt: true },
+      select: { id: true, nomeEmpresa: true, email: true, createdAt: true },
     });
 
     if (!user) {
