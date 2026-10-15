@@ -1,14 +1,10 @@
-import { useEffect, useState, type FormEvent } from 'react'
+
+import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import './App.css'
+import type { Usuario } from './types'
+import AreaLogada from './AreaLogada'
 
 const API_URL = 'http://localhost:3000'
-
-type Usuario = {
-  id: number
-  nomeEmpresa: string
-  email: string
-  createdAt: string
-}
 
 function App() {
   const [modo, setModo] = useState<'login' | 'cadastro'>('login')
@@ -43,7 +39,7 @@ function App() {
         }
 
         const resultado = await resposta.json()
-          setUsuario(resultado.user)
+        setUsuario(resultado.user)
       } catch {
         setMensagem('Não foi possível verificar sua sessão.')
         setErro(true)
@@ -73,16 +69,18 @@ function App() {
           body: JSON.stringify(
             modo === 'cadastro'
               ? { nomeEmpresa, email, password }
-              : { email, password }
+              : { email, password },
           ),
-        }
+        },
       )
 
       const resultado = await resposta.json()
 
       if (!resposta.ok) {
         throw new Error(
-          resultado.error || resultado.message || 'Não foi possível realizar a operação.'
+          resultado.error ||
+            resultado.message ||
+            'Não foi possível realizar a operação.',
         )
       }
 
@@ -110,48 +108,24 @@ function App() {
     setPassword('')
   }
 
-  
-  function sair() {
+  const sair = useCallback(() => {
     sessionStorage.removeItem('token')
     setUsuario(null)
     setModo('login')
     setMensagem('')
     setErro(false)
+  }, [])
+
+  if (verificandoSessao) {
+    return <main className="tela-carregamento">Verificando sessão...</main>
   }
 
-    if (verificandoSessao) {
-      return <main className="tela-carregamento">Verificando sessão...</main>
-    }
+  if (usuario) {
+    return <AreaLogada usuario={usuario} onSair={sair} />
+  }
 
-   if (usuario) {
-    return (
-      <main className="area-logada">
-        <div className="cartao-logado">
-          <span className="etiqueta">Área da empresa</span>
-
-          <h1>Bem-vinda, {usuario.nomeEmpresa}!</h1>
-
-          <p>Você está autenticada no sistema.</p>
-
-          <p>
-            <strong>E-mail:</strong> {usuario.email}
-          </p>
-
-          <button
-            type="button"
-            className="botao-principal"
-            onClick={sair}
-          >
-            Sair da conta
-          </button>
-      </div>
-    </main>
-  )
-}
-
-return (
-  <main className="pagina">
-
+  return (
+    <main className="pagina">
       <section className="apresentacao">
         <span className="marca">Diagnóstico Empresarial</span>
 
@@ -196,7 +170,11 @@ return (
           </div>
 
           <div className="titulo-formulario">
-            <h2>{modo === 'login' ? 'Bem-vinda de volta!' : 'Cadastre sua empresa'}</h2>
+            <h2>
+              {modo === 'login'
+                ? 'Bem-vinda de volta!'
+                : 'Cadastre sua empresa'}
+            </h2>
             <p>
               {modo === 'login'
                 ? 'Entre para continuar para sua área empresarial.'
@@ -260,7 +238,11 @@ return (
               </p>
             )}
 
-            <button className="botao-principal" type="submit" disabled={carregando}>
+            <button
+              className="botao-principal"
+              type="submit"
+              disabled={carregando}
+            >
               {carregando
                 ? 'Aguarde...'
                 : modo === 'login'
@@ -270,7 +252,9 @@ return (
           </form>
 
           <p className="alternativa">
-            {modo === 'login' ? 'Ainda não tem uma conta?' : 'Já tem uma conta?'}{' '}
+            {modo === 'login'
+              ? 'Ainda não tem uma conta?'
+              : 'Já tem uma conta?'}{' '}
             <button
               type="button"
               onClick={() =>
@@ -284,7 +268,6 @@ return (
       </section>
     </main>
   )
-
 }
 
 export default App

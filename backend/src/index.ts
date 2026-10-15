@@ -4,12 +4,16 @@ import "dotenv/config";
 
 import { prisma } from "./lib/prisma.js";
 import authRouter from "./routes/auth.js";
+import perguntasRouter from "./routes/perguntas.js";
+import diagnosticosRouter from "./routes/diagnosticos.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRouter);
+app.use("/perguntas", perguntasRouter);
+app.use("/diagnosticos", diagnosticosRouter);
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });

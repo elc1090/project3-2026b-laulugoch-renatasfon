@@ -1,0 +1,238 @@
+
+.diagnostico-container {
+  min-height: 100vh;
+  background: #f5f7f8;
+  padding: 32px 16px;
+  color: #202a36;
+}
+
+.diagnostico-cabecalho,
+.diagnostico-progresso,
+.lista-perguntas,
+.diagnostico-erro,
+.diagnostico-acoes,
+.resultado-cabecalho,
+.resultado-nivel,
+.resultado-dimensoes,
+.resultado-destaques {
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.diagnostico-cabecalho,
+.resultado-cabecalho {
+  margin-bottom: 24px;
+}
+
+.diagnostico-cabecalho > button {
+  border: none;
+  background: transparent;
+  color: #75808b;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.diagnostico-cabecalho h1,
+.resultado-cabecalho h1 {
+  margin: 8px 0;
+}
+
+.diagnostico-progresso {
+  margin-bottom: 28px;
+}
+
+.progresso-texto,
+.dimensao-resultado-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.diagnostico-progresso progress,
+.dimensao-resultado progress {
+  display: block;
+  width: 100%;
+  height: 10px;
+  accent-color: #246b59;
+}
+
+.lista-perguntas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pergunta-card {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e6ebef;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px #172d3d0a;
+}
+
+.pergunta-card h2 {
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.opcoes-resposta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.opcoes-resposta label {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 8px;
+  border: 1px solid #dce2e7;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.opcoes-resposta label:has(input:checked) {
+  background: #246b59;
+  border-color: #246b59;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.opcoes-resposta input {
+  margin: 0 6px 0 0;
+  accent-color: #246b59;
+}
+
+.opcoes-resposta label:focus-within {
+  outline: 2px solid #377b69;
+  outline-offset: 2px;
+}
+
+.diagnostico-erro {
+  padding: 12px 16px;
+  color: #a32626;
+  background: #fff0f0;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.diagnostico-acoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.diagnostico-acoes button {
+  flex: 1;
+  min-height: 46px;
+  padding: 12px 16px;
+  border: 1px solid #dce2e7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #172d3d;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.diagnostico-acoes button:last-child {
+  background: #246b59;
+  border-color: #246b59;
+  color: #ffffff;
+}
+
+.diagnostico-acoes button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.resultado-cabecalho {
+  text-align: center;
+  margin-top: 24px;
+  color: #64717d;
+}
+
+.resultado-nivel,
+.resultado-dimensoes,
+.resultado-destaques {
+  padding: 24px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  border: 1px solid #e6ebef;
+  border-radius: 12px;
+}
+
+.resultado-nivel > span {
+  color: #64717d;
+  font-size: 14px;
+}
+
+.resultado-nivel h2 {
+  margin: 8px 0;
+  color: #246b59;
+}
+
+.resultado-nivel p {
+  line-height: 1.6;
+}
+
+.resultado-dimensoes > h2,
+.resultado-destaques h2 {
+  font-size: 18px;
+  margin: 0 0 18px;
+}
+
+.dimensao-resultado {
+  margin-bottom: 20px;
+}
+
+.dimensao-resultado:last-child {
+  margin-bottom: 0;
+}
+
+.resultado-destaques {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.resultado-destaques ul {
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .diagnostico-container {
+    padding: 24px 12px;
+  }
+
+  .pergunta-card,
+  .resultado-nivel,
+  .resultado-dimensoes,
+  .resultado-destaques {
+    padding: 18px;
+  }
+
+  .opcoes-resposta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .resultado-destaques {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostico-acoes {
+    flex-direction: column;
+  }
+}

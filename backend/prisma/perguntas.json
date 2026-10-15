@@ -1,0 +1,152 @@
+[
+  {
+    "id": "Q01",
+    "dimensao": "AMBIENTAL",
+    "ordem": 1,
+    "texto": "¿La empresa identifica qué materiales o recursos se desperdician con mayor frecuencia?"
+  },
+  {
+    "id": "Q02",
+    "dimensao": "AMBIENTAL",
+    "ordem": 2,
+    "texto": "¿La empresa busca alternativas para disminuir el impacto ambiental de sus entregas o despachos?"
+  },
+  {
+    "id": "Q03",
+    "dimensao": "AMBIENTAL",
+    "ordem": 3,
+    "texto": "¿La empresa informa a sus clientes cómo disponer adecuadamente de sus productos o envases?"
+  },
+  {
+    "id": "Q04",
+    "dimensao": "AMBIENTAL",
+    "ordem": 4,
+    "texto": "¿La empresa utiliza productos, materiales o tecnologías que contribuyan al cuidado del medioambiente?"
+  },
+  {
+    "id": "Q05",
+    "dimensao": "AMBIENTAL",
+    "ordem": 5,
+    "texto": "¿La empresa implementa medidas para disminuir la contaminación generada por sus actividades?"
+  },
+  {
+    "id": "Q06",
+    "dimensao": "SOCIAL",
+    "ordem": 6,
+    "texto": "¿La empresa consulta a sus trabajadores sobre posibles mejoras en sus condiciones laborales?"
+  },
+  {
+    "id": "Q07",
+    "dimensao": "SOCIAL",
+    "ordem": 7,
+    "texto": "¿La empresa cuenta con medidas para facilitar la integración de nuevos trabajadores?"
+  },
+  {
+    "id": "Q08",
+    "dimensao": "SOCIAL",
+    "ordem": 8,
+    "texto": "¿La empresa realiza acciones para prevenir conflictos y promover el buen trato?"
+  },
+  {
+    "id": "Q09",
+    "dimensao": "SOCIAL",
+    "ordem": 9,
+    "texto": "¿La empresa promueve un ambiente de trabajo que respete la diversidad y las diferencias individuales?"
+  },
+  {
+    "id": "Q10",
+    "dimensao": "SOCIAL",
+    "ordem": 10,
+    "texto": "¿La empresa implementa iniciativas que contribuyan al bienestar y la motivación de sus trabajadores?"
+  },
+  {
+    "id": "Q11",
+    "dimensao": "ECONOMICA",
+    "ordem": 11,
+    "texto": "¿La empresa identifica cuáles de sus procesos generan mayores gastos?"
+  },
+  {
+    "id": "Q12",
+    "dimensao": "ECONOMICA",
+    "ordem": 12,
+    "texto": "¿La empresa evalúa alternativas que permitan ahorrar recursos sin disminuir la calidad de sus productos o servicios?"
+  },
+  {
+    "id": "Q13",
+    "dimensao": "ECONOMICA",
+    "ordem": 13,
+    "texto": "¿La empresa se prepara económicamente para enfrentar períodos de menores ventas?"
+  },
+  {
+    "id": "Q14",
+    "dimensao": "ECONOMICA",
+    "ordem": 14,
+    "texto": "¿La empresa analiza nuevas oportunidades de negocio que puedan contribuir a su crecimiento sostenible?"
+  },
+  {
+    "id": "Q15",
+    "dimensao": "ECONOMICA",
+    "ordem": 15,
+    "texto": "¿La empresa realiza una planificación de sus inversiones considerando los beneficios económicos a largo plazo?"
+  },
+  {
+    "id": "Q16",
+    "dimensao": "GOBERNANZA",
+    "ordem": 16,
+    "texto": "¿La empresa define metas de mejora y revisa periódicamente sus resultados?"
+  },
+  {
+    "id": "Q17",
+    "dimensao": "GOBERNANZA",
+    "ordem": 17,
+    "texto": "¿La empresa informa claramente a sus clientes sobre precios, condiciones y características de sus productos o servicios?"
+  },
+  {
+    "id": "Q18",
+    "dimensao": "GOBERNANZA",
+    "ordem": 18,
+    "texto": "¿La empresa dispone de un procedimiento para resolver problemas o reclamos?"
+  },
+  {
+    "id": "Q19",
+    "dimensao": "GOBERNANZA",
+    "ordem": 19,
+    "texto": "¿La empresa establece responsabilidades claras para organizar y supervisar sus actividades?"
+  },
+  {
+    "id": "Q20",
+    "dimensao": "GOBERNANZA",
+    "ordem": 20,
+    "texto": "¿La empresa considera criterios éticos y de transparencia al tomar decisiones comerciales?"
+  },
+  {
+    "id": "Q21",
+    "dimensao": "COMUNIDAD",
+    "ordem": 21,
+    "texto": "¿La empresa identifica necesidades de su sector en las que podría contribuir?"
+  },
+  {
+    "id": "Q22",
+    "dimensao": "COMUNIDAD",
+    "ordem": 22,
+    "texto": "¿La empresa mantiene vínculos con organizaciones o emprendimientos cercanos?"
+  },
+  {
+    "id": "Q23",
+    "dimensao": "COMUNIDAD",
+    "ordem": 23,
+    "texto": "¿La empresa considera las molestias que sus actividades podrían generar a vecinos o establecimientos cercanos?"
+  },
+  {
+    "id": "Q24",
+    "dimensao": "COMUNIDAD",
+    "ordem": 24,
+    "texto": "¿La empresa participa en actividades que promueven el desarrollo social, cultural o ambiental de su comunidad?"
+  },
+  {
+    "id": "Q25",
+    "dimensao": "COMUNIDAD",
+    "ordem": 25,
+    "texto": "¿La empresa busca generar oportunidades de colaboración o beneficio mutuo con personas y organizaciones de su localidad?"
+  }
+]

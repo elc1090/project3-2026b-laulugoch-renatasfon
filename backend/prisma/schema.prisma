@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -7,10 +8,55 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id           Int      @id @default(autoincrement())
-  nomeEmpresa  String
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
+enum Dimensao {
+  AMBIENTAL
+  SOCIAL
+  ECONOMICA
+  GOBERNANZA
+  COMUNIDAD
+}
+
+model Empresa {
+  id             Int           @id @default(autoincrement())
+  nomeEmpresa    String
+  email          String        @unique
+  passwordHash   String
+  createdAt      DateTime      @default(now())
+
+  diagnosticos   Diagnostico[]
+}
+
+model Pergunta {
+  id             String        @id
+  dimensao       Dimensao
+  ordem          Int           @unique
+  texto          String
+  ativa          Boolean       @default(true)
+
+  respostas      Resposta[]
+}
+
+model Diagnostico {
+  id             Int           @id @default(autoincrement())
+  empresaId      Int
+  pontosTotais   Int
+  pontuacao      Int
+  createdAt      DateTime      @default(now())
+
+  empresa        Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  respostas      Resposta[]
+
+  @@index([empresaId])
+}
+
+model Resposta {
+  id             Int           @id @default(autoincrement())
+  diagnosticoId  Int
+  perguntaId     String
+  valor          Int
+
+  diagnostico    Diagnostico   @relation(fields: [diagnosticoId], references: [id], onDelete: Cascade)
+  pergunta       Pergunta      @relation(fields: [perguntaId], references: [id])
+
+  @@unique([diagnosticoId, perguntaId])
 }

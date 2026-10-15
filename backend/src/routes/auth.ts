@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 
@@ -13,11 +14,15 @@ router.post("/register", async (req, res) => {
   try {
     const { nomeEmpresa, email, password } = req.body ?? {};
 
-    if (typeof nomeEmpresa !== "string" || typeof email !== "string" || typeof password !== "string") {
+    if (
+      typeof nomeEmpresa !== "string" ||
+      typeof email !== "string" ||
+      typeof password !== "string"
+    ) {
       res.status(400).json({ error: "Todos os campos são obrigatórios" });
       return;
     }
-    
+
     const normalizedNome = nomeEmpresa.trim();
 
     if (normalizedNome.length === 0 || normalizedNome.length > 150) {
@@ -28,7 +33,6 @@ router.post("/register", async (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (
       normalizedEmail.length === 0 ||
@@ -46,26 +50,35 @@ router.post("/register", async (req, res) => {
       return;
     }
 
-    const existingUser = await prisma.user.findUnique({
+    const existingEmpresa = await prisma.empresa.findUnique({
       where: { email: normalizedEmail },
     });
 
-    if (existingUser) {
+    if (existingEmpresa) {
       res.status(409).json({ error: "Este e-mail já está cadastrado" });
       return;
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
 
-    const user = await prisma.user.create({
-      data: { nomeEmpresa: normalizedNome, email: normalizedEmail, passwordHash },
-      select: { id: true, nomeEmpresa: true,email: true, createdAt: true },
+    const empresa = await prisma.empresa.create({
+      data: {
+        nomeEmpresa: normalizedNome,
+        email: normalizedEmail,
+        passwordHash,
+      },
+      select: {
+        id: true,
+        nomeEmpresa: true,
+        email: true,
+        createdAt: true,
+      },
     });
 
     res.status(201).json({
       message: "Conta criada com sucesso",
-      user,
-      token: signToken(user.id),
+      user: empresa,
+      token: signToken(empresa.id),
     });
   } catch (error) {
     if (
@@ -78,7 +91,7 @@ router.post("/register", async (req, res) => {
       return;
     }
 
-    console.error("Erro ao cadastrar usuário:", error);
+    console.error("Erro ao cadastrar empresa:", error);
     res.status(500).json({ error: "Não foi possível criar a conta" });
   }
 });
@@ -104,23 +117,28 @@ router.post("/login", async (req, res) => {
       return;
     }
 
-    const user = await prisma.user.findUnique({
+    const empresa = await prisma.empresa.findUnique({
       where: { email: normalizedEmail },
     });
 
-    const passwordOk = user
-      ? await bcrypt.compare(password, user.passwordHash)
+    const passwordOk = empresa
+      ? await bcrypt.compare(password, empresa.passwordHash)
       : false;
 
-    if (!user || !passwordOk) {
+    if (!empresa || !passwordOk) {
       res.status(401).json({ error: "E-mail ou senha incorretos" });
       return;
     }
 
     res.json({
       message: "Login realizado com sucesso",
-      user: { id: user.id, nomeEmpresa: user.nomeEmpresa, email: user.email, createdAt: user.createdAt },
-      token: signToken(user.id),
+      user: {
+        id: empresa.id,
+        nomeEmpresa: empresa.nomeEmpresa,
+        email: empresa.email,
+        createdAt: empresa.createdAt,
+      },
+      token: signToken(empresa.id),
     });
   } catch (error) {
     console.error("Erro ao fazer login:", error);
@@ -130,20 +148,25 @@ router.post("/login", async (req, res) => {
 
 router.get("/me", requireAuth, async (_req, res) => {
   try {
-    const user = await prisma.user.findUnique({
+    const empresa = await prisma.empresa.findUnique({
       where: { id: res.locals.userId },
-      select: { id: true, nomeEmpresa: true, email: true, createdAt: true },
+      select: {
+        id: true,
+        nomeEmpresa: true,
+        email: true,
+        createdAt: true,
+      },
     });
 
-    if (!user) {
-      res.status(404).json({ error: "Usuário não encontrado" });
+    if (!empresa) {
+      res.status(404).json({ error: "Empresa não encontrada" });
       return;
     }
 
-    res.json({ user });
+    res.json({ user: empresa });
   } catch (error) {
-    console.error("Erro ao buscar usuário:", error);
-    res.status(500).json({ error: "Não foi possível buscar o usuário" });
+    console.error("Erro ao buscar empresa:", error);
+    res.status(500).json({ error: "Não foi possível buscar a empresa" });
   }
 });
 
