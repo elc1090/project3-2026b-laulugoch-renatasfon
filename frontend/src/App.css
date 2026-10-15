@@ -272,3 +272,23 @@
   color: #64717d;
   line-height: 1.7;
 }
+
+.logout-button {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 100;
+  width: auto;          /* evita herdar largura 100% de estilos de botão */
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: #236b5b;
+  border: 1px solid #236b5b;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #236b5b;
+  color: #fff;
+}

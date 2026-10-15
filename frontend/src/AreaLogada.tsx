@@ -151,7 +151,7 @@ function AreaLogada({ usuario, onSair }: Props) {
           Iniciar novo diagnóstico
         </button>
 
-        <button type="button" onClick={onSair}>
+        <button className="logout-button" onClick={onSair}>
           Sair da conta
         </button>
       </div>
