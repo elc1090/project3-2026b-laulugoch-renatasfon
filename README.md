@@ -10,8 +10,9 @@
 [Deploy](http://empresa-frontend.onrender.com)
 
 
-## Desenvolvedor(a) / Desenvolvedor(es/as)
+## Desenvolvedoras
 Lauren Auth Lugoch - Sistemas de Informação
+
 Renata de Souza de Fonseca - Sistemas de Informação
 
 
