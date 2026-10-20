@@ -20,9 +20,9 @@ async function main() {
     readFileSync(caminho, "utf-8")
   );
 
-  if (perguntas.length !== 25) {
+  if (perguntas.length !== 9) {
     throw new Error(
-      `Esperava 25 perguntas, mas encontrei ${perguntas.length}.`
+      `Esperava 9 perguntas, mas encontrei ${perguntas.length}.`
     );
   }
 

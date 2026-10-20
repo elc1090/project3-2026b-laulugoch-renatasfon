@@ -4,7 +4,7 @@ import { requireAuth } from "../middleware/auth.js";
 import {
   calcularResultado,
   nivelPorPontuacao,
-  PONTOS_POR_PERGUNTA,
+  VALORES_VALIDOS,
 } from "../lib/diagnostico.js";
 
 const router = Router();
@@ -69,12 +69,10 @@ router.post("/", async (req, res) => {
 
       if (
         typeof perguntaId !== "string" ||
-        !Number.isInteger(valor) ||
-        valor < 0 ||
-        valor > PONTOS_POR_PERGUNTA
+        !VALORES_VALIDOS.includes(valor)
       ) {
         res.status(400).json({
-          error: `Cada resposta precisa de perguntaId e valor inteiro de 0 a ${PONTOS_POR_PERGUNTA}`,
+          error: `Cada resposta precisa de perguntaId e valor ${VALORES_VALIDOS.join(", ")}`,
         });
         return;
       }

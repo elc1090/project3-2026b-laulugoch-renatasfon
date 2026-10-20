@@ -12,8 +12,6 @@ enum Dimensao {
   AMBIENTAL
   SOCIAL
   ECONOMICA
-  GOBERNANZA
-  COMUNIDAD
 }
 
 model Empresa {
