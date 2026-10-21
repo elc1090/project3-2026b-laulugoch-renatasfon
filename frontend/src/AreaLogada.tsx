@@ -6,6 +6,7 @@ import Diagnostico from './components/Diagnostico'
 import Layout, { type Tela } from './components/layout'
 import MeuPlano from './components/MeuPlano'
 import ResultadoDiagnostico from './components/ResultadoDiagnostico'
+import TarjetaEmpresa from './components/TarjetaEmpresa'
 
 type Props = {
   usuario: Usuario
@@ -130,15 +131,11 @@ function AreaLogada({ usuario, onSair }: Props) {
     }
 
     return (
-      <div className="area-logada">
+      <div className="inicio-grid">
+        <TarjetaEmpresa usuario={usuario} />
+
         <div className="cartao-logado">
-          <span className="etiqueta">Área de la empresa</span>
-
-          <h1>¡Bienvenido(a) a EcoSME {usuario.nomeEmpresa}!</h1>
-
-          <p>
-            <strong>Correo electrónico:</strong> {usuario.email}
-          </p>
+          <span className="etiqueta">Diagnóstico</span>
 
           {erro && (
             <p className="mensagem mensagem-erro" role="alert">
@@ -171,8 +168,8 @@ function AreaLogada({ usuario, onSair }: Props) {
             <section className="ultimo-diagnostico">
               <h2>Comienza tu diagnóstico</h2>
               <p>
-                Responde las preguntas para conocer el nivel de
-                sostenibilidad de tu empresa.
+                Responde las preguntas para conocer el nivel de sostenibilidad
+                de tu empresa.
               </p>
             </section>
           )}

@@ -280,3 +280,19 @@
   color: #64717d;
   line-height: 1.7;
 }
+.campo select {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #dce2e7;
+  border-radius: 8px;
+  outline: none;
+  color: #202a36;
+  background: #ffffff;
+  font: inherit;
+  font-size: 14px;
+}
+
+.campo select:focus {
+  border-color: #377b69;
+  box-shadow: 0 0 0 3px #377b691c;
+}

@@ -1,10 +1,13 @@
+export type TamanhoEmpresa = 'MICRO' | 'PEQUENA' | 'MEDIA'
+
 export type Usuario = {
   id: number
   nomeEmpresa: string
   email: string
   createdAt: string
+  tamanho?: TamanhoEmpresa | null
+  numFuncionarios?: number | null
 }
-
 export type Dimensao =
   | 'AMBIENTAL'
   | 'SOCIAL'

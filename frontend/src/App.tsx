@@ -1,7 +1,6 @@
-
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import './App.css'
-import type { Usuario } from './types'
+import type { TamanhoEmpresa, Usuario } from './types'
 import AreaLogada from './AreaLogada'
 import Logo from './components/logo'
 
@@ -10,6 +9,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 function App() {
   const [modo, setModo] = useState<'login' | 'cadastro'>('login')
   const [nomeEmpresa, setNomeEmpresa] = useState('')
+  const [tamanho, setTamanho] = useState<TamanhoEmpresa | ''>('')
+  const [numFuncionarios, setNumFuncionarios] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [mensagem, setMensagem] = useState('')
@@ -69,7 +70,13 @@ function App() {
           },
           body: JSON.stringify(
             modo === 'cadastro'
-              ? { nomeEmpresa, email, password }
+              ? {
+                  nomeEmpresa,
+                  email,
+                  password,
+                  tamanho,
+                  numFuncionarios: Number(numFuncionarios),
+                }
               : { email, password },
           ),
         },
@@ -185,19 +192,57 @@ function App() {
 
           <form onSubmit={handleSubmit}>
             {modo === 'cadastro' && (
-              <div className="campo">
-                <label htmlFor="nomeEmpresa">Nombre de la empresa</label>
-                <input
-                  id="nomeEmpresa"
-                  type="text"
-                  placeholder="Ej.: Mi Empresa"
-                  value={nomeEmpresa}
-                  onChange={(event) => setNomeEmpresa(event.target.value)}
-                  maxLength={150}
-                  autoComplete="organization"
-                  required
-                />
-              </div>
+              <>
+                <div className="campo">
+                  <label htmlFor="nomeEmpresa">Nombre de la empresa</label>
+                  <input
+                    id="nomeEmpresa"
+                    type="text"
+                    placeholder="Ej.: Mi Empresa"
+                    value={nomeEmpresa}
+                    onChange={(event) => setNomeEmpresa(event.target.value)}
+                    maxLength={150}
+                    autoComplete="organization"
+                    required
+                  />
+                </div>
+
+                <div className="campo">
+                  <label htmlFor="tamanho">Tamaño de la empresa</label>
+                  <select
+                    id="tamanho"
+                    value={tamanho}
+                    onChange={(event) =>
+                      setTamanho(event.target.value as TamanhoEmpresa | '')
+                    }
+                    required
+                  >
+                    <option value="" disabled>
+                      Selecciona una opción
+                    </option>
+                    <option value="MICRO">Microempresa</option>
+                    <option value="PEQUENA">Pequeña empresa</option>
+                    <option value="MEDIA">Mediana empresa</option>
+                  </select>
+                </div>
+
+                <div className="campo">
+                  <label htmlFor="numFuncionarios">
+                    Cantidad de funcionarios
+                  </label>
+                  <input
+                    id="numFuncionarios"
+                    type="number"
+                    min={1}
+                    max={100000}
+                    step={1}
+                    placeholder="Ej.: 8"
+                    value={numFuncionarios}
+                    onChange={(event) => setNumFuncionarios(event.target.value)}
+                    required
+                  />
+                </div>
+              </>
             )}
 
             <div className="campo">

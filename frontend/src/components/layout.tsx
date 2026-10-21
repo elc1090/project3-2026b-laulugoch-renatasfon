@@ -9,7 +9,7 @@ export type Tela =
   | 'acompanhamento'
 
 const ETAPAS: { tela: Tela; rotulo: string; exigeResultado: boolean }[] = [
-  { tela: 'inicio', rotulo: 'Empresa', exigeResultado: false },
+  { tela: 'inicio', rotulo: 'Mi Empresa', exigeResultado: false },
   { tela: 'diagnostico', rotulo: 'Diagnóstico', exigeResultado: false },
   { tela: 'resultado', rotulo: 'Resultado', exigeResultado: true },
   { tela: 'plano', rotulo: 'Mi Plan', exigeResultado: true },
