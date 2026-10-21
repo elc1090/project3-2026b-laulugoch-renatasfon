@@ -504,3 +504,46 @@
     display: inline;
   }
 }
+
+.plano-tarefa-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plano-tarefa-pontos {
+  font-size: 13px;
+  font-weight: 700;
+  color: #a52e28;
+}
+
+.plano-reforco {
+  border-left: 4px solid #246b59;
+}
+
+.plano-reforco .plano-tarefa-pontos {
+  color: #246b59;
+}
+
+.plano-detalhes {
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.plano-detalhes div {
+  display: flex;
+  gap: 8px;
+}
+
+.plano-detalhes dt {
+  font-weight: 700;
+  min-width: 80px;
+}
+
+.plano-detalhes dd {
+  margin: 0;
+  color: #64717d;
+}

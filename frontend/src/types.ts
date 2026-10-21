@@ -33,10 +33,23 @@ export type Resultado = {
   areasDeMelhoria: Dimensao[]
 }
 
-export type Tarefa = {
-  id: number
-  dimensao: Dimensao
+export type AcaoPlano = {
   titulo: string
-  descricao?: string
-  status?: string
+  descricao: string
+  indicador: string
+  ods: number[]
+}
+
+export type ItemPlano = {
+  dimensao: Dimensao
+  pontuacao: number
+  situacao: 'ACAO' | 'REFORCO'
+  acao?: AcaoPlano
+  reforco?: { titulo: string; descricao: string }
+}
+
+export type Plano = {
+  diagnosticoId: number
+  createdAt: string
+  dimensoes: ItemPlano[]
 }

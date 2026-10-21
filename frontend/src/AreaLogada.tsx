@@ -20,8 +20,6 @@ function AreaLogada({ usuario, onSair }: Props) {
   const [resultadoAtual, setResultadoAtual] = useState<Resultado | null>(null)
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
-  const [gerandoPlano, setGerandoPlano] = useState(false)
-  const [erroPlano, setErroPlano] = useState('')
 
   useEffect(() => {
     let ativo = true
@@ -58,8 +56,6 @@ function AreaLogada({ usuario, onSair }: Props) {
   }, [onSair])
 
   function irPara(novaTela: Tela) {
-    setErroPlano('')
-
     if (novaTela === 'resultado') {
       setResultadoAtual((atual) => atual ?? ultimoResultado)
     }
@@ -83,31 +79,8 @@ function AreaLogada({ usuario, onSair }: Props) {
     irPara('diagnostico')
   }
 
-  async function gerarPlano() {
-    if (!resultadoAtual) {
-      return
-    }
-
-    setGerandoPlano(true)
-    setErroPlano('')
-
-    try {
-      // PROVISÓRIO: trocar pela rota real que insere as tarefas
-      await apiFetch('/planos/gerar', {
-        method: 'POST',
-        body: JSON.stringify({ diagnosticoId: resultadoAtual.id }),
-      })
-
-      irPara('plano')
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 401) {
-        onSair()
-      } else {
-        setErroPlano(mensagemDeErro(error))
-      }
-    } finally {
-      setGerandoPlano(false)
-    }
+  function gerarPlano() {
+    irPara('plano')
   }
 
   const sairDoPlano = useCallback(() => onSair(), [onSair])
@@ -126,8 +99,8 @@ function AreaLogada({ usuario, onSair }: Props) {
       return (
         <ResultadoDiagnostico
           resultado={resultadoAtual}
-          gerandoPlano={gerandoPlano}
-          erroPlano={erroPlano}
+          gerandoPlano={false}
+          erroPlano=""
           onGerarPlano={gerarPlano}
           onNovoDiagnostico={iniciarDiagnostico}
           onVoltar={() => irPara('inicio')}

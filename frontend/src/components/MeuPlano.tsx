@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { apiFetch, ApiError, mensagemDeErro } from '../api'
-import { NOME_DIMENSAO, ehDimensaoAtiva } from '../dimensoes'
-import type { Tarefa } from '../types'
+import { LIMITE_PLANO, NOME_DIMENSAO, ehDimensaoAtiva } from '../dimensoes'
+import type { ItemPlano, Plano } from '../types'
 
 type Props = {
   onSair: () => void
@@ -9,8 +9,9 @@ type Props = {
 }
 
 function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
-  const [tarefas, setTarefas] = useState<Tarefa[]>([])
+  const [itens, setItens] = useState<ItemPlano[]>([])
   const [carregando, setCarregando] = useState(true)
+  const [semDiagnostico, setSemDiagnostico] = useState(false)
   const [erro, setErro] = useState('')
 
   useEffect(() => {
@@ -18,22 +19,21 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
 
     async function carregar() {
       try {
-        // PROVISÓRIO: trocar pela rota real de listagem das tarefas
-        const dados = await apiFetch<{ tarefas: Tarefa[] }>('/plano')
+        const plano = await apiFetch<Plano>('/plano')
 
         if (ativo) {
-          setTarefas(dados.tarefas.filter((t) => ehDimensaoAtiva(t.dimensao)))
+          setItens(plano.dimensoes.filter((i) => ehDimensaoAtiva(i.dimensao)))
         }
       } catch (error) {
         if (error instanceof ApiError && error.status === 401) {
           onSair()
+        } else if (error instanceof ApiError && error.status === 404) {
+          if (ativo) setSemDiagnostico(true)
         } else if (ativo) {
           setErro(mensagemDeErro(error))
         }
       } finally {
-        if (ativo) {
-          setCarregando(false)
-        }
+        if (ativo) setCarregando(false)
       }
     }
 
@@ -44,12 +44,17 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
     }
   }, [onSair])
 
+  const acoes = itens.filter((i) => i.situacao === 'ACAO')
+  const reforcos = itens.filter((i) => i.situacao === 'REFORCO')
+
   return (
     <div className="diagnostico-container">
       <header className="resultado-cabecalho">
         <p>EcoSME</p>
         <h1>Meu Plano de Ação</h1>
-        <p>Tarefas geradas a partir do seu diagnóstico.</p>
+        <p>
+          Ações sugeridas para as dimensões com menos de {LIMITE_PLANO} pontos.
+        </p>
       </header>
 
       <section className="plano-lista">
@@ -61,25 +66,53 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
           </p>
         )}
 
-        {!carregando && !erro && tarefas.length === 0 && (
+        {semDiagnostico && (
           <div className="plano-vazio">
-            <p>
-              Seu plano ainda não tem tarefas. Elas são criadas quando uma
-              dimensão fica abaixo de 60 pontos.
-            </p>
+            <p>Faça o diagnóstico antes de ver o seu plano de ação.</p>
             <button type="button" onClick={onIrParaDiagnostico}>
-              Fazer um diagnóstico
+              Fazer diagnóstico
             </button>
           </div>
         )}
 
-        {tarefas.map((tarefa) => (
-          <article className="plano-tarefa" key={tarefa.id}>
-            <span className="plano-tarefa-dimensao">
-              {NOME_DIMENSAO[tarefa.dimensao]}
-            </span>
-            <h2>{tarefa.titulo}</h2>
-            {tarefa.descricao && <p>{tarefa.descricao}</p>}
+        {acoes.map((item) => (
+          <article className="plano-tarefa" key={item.dimensao}>
+            <div className="plano-tarefa-topo">
+              <span className="plano-tarefa-dimensao">
+                {NOME_DIMENSAO[item.dimensao]}
+              </span>
+              <span className="plano-tarefa-pontos">{item.pontuacao}/100</span>
+            </div>
+
+            <h2>{item.acao?.titulo}</h2>
+            <p>{item.acao?.descricao}</p>
+
+            <dl className="plano-detalhes">
+              <div>
+                <dt>Indicador</dt>
+                <dd>{item.acao?.indicador}</dd>
+              </div>
+              {item.acao && item.acao.ods.length > 0 && (
+                <div>
+                  <dt>ODS</dt>
+                  <dd>{item.acao.ods.join(', ')}</dd>
+                </div>
+              )}
+            </dl>
+          </article>
+        ))}
+
+        {reforcos.map((item) => (
+          <article className="plano-tarefa plano-reforco" key={item.dimensao}>
+            <div className="plano-tarefa-topo">
+              <span className="plano-tarefa-dimensao">
+                {NOME_DIMENSAO[item.dimensao]}
+              </span>
+              <span className="plano-tarefa-pontos">{item.pontuacao}/100</span>
+            </div>
+
+            <h2>{item.reforco?.titulo}</h2>
+            <p>{item.reforco?.descricao}</p>
           </article>
         ))}
       </section>
