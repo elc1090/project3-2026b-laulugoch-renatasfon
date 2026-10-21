@@ -42,8 +42,47 @@ Também fui responsável pelo deploy inicial da aplicação, para disponibilizar
 
 ### Trechos de código
 
-Substitua este texto por uma indicação de pelo menos 3 trechos de código que você(s) queira(m) destacar para a turma (por exemplo, para explicar algo que aprendeu, para alertar sobre alguma dificuldade de compreensão, para mostrar uma curiosidade, etc).
+1. Autorização pelo dono do dado
 
+O empresaId vem do token (colocado em res.locals.userId pelo middleware) e nunca do corpo da requisição. Se a empresa B pedir o diagnóstico da empresa A, a consulta não encontra nada e a resposta é 404, como se ele não existisse:
+
+```ts
+const diagnostico = await prisma.diagnostico.findFirst({
+  where: { id, empresaId: res.locals.userId },
+  include: { respostas: { include: { pergunta: true } } },
+});
+
+if (!diagnostico) {
+  res.status(404).json({ error: "Diagnóstico não encontrado" });
+  return;
+}
+```
+
+2. Middleware de autenticação
+
+Barra qualquer requisição sem token válido antes de a rota executar. Esconder botões no React não protege nada, e é aqui que a proteção de fato acontece:
+
+```ts
+const userId = verifyToken(header.slice(7));
+
+if (userId === null) {
+  res.status(401).json({ error: "Token inválido ou expirado" });
+  return;
+}
+
+res.locals.userId = userId;
+next();
+```
+
+3. Migration que remove valores de um enum
+
+O PostgreSQL não remove valores de um enum, então o Prisma recria o tipo, e isso falha se ainda houver dados com os valores antigos. Acrescentei à mão, no topo do arquivo gerado, a limpeza dos dados do modelo antigo (a ordem respeita as chaves estrangeiras):
+
+```sql
+DELETE FROM "Resposta";
+DELETE FROM "Diagnostico";
+DELETE FROM "Pergunta";
+```
 
 ## Tecnologias
 
@@ -56,12 +95,19 @@ Substitua este texto por uma lista detalhada de tecnologias utilizadas:
 
 ### Autenticação e autorização
 
-Substitua este texto por uma descrição de como foram implementadas a autenticação e a autorização (session? token?).
+A aplicação utiliza autenticação baseada em tokens JWT, sem manter uma sessão tradicional no servidor.
+
+No cadastro, o backend valida os dados recebidos, gera um hash da senha com bcryptjs e armazena as informações da empresa no PostgreSQL. No login, compara a senha informada com o hash armazenado e, se as credenciais forem válidas, gera um token JWT.
+
+O frontend armazena o token na sessionStorage e o envia nas requisições protegidas por meio do cabeçalho Authorization: Bearer. Ao recarregar a página, consulta o backend para verificar a autenticação e recuperar os dados da empresa.
+
+A autorização é realizada no backend. Um middleware verifica o token antes de permitir o acesso às rotas protegidas, e as consultas aos diagnósticos consideram o identificador da empresa autenticada. Assim, uma empresa não pode acessar os diagnósticos de outra apenas alterando o identificador enviado na requisição.
+
 
 ### Ambiente de desenvolvimento
 
 - VS Code
-- ...
+
 
 ## Referências e créditos
 
