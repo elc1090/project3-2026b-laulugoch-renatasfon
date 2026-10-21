@@ -1,7 +1,7 @@
 # Projeto: Aplicação com cadastro e autenticação de usuários integrando frontend, backend e persistência
 
 
-![Substitua a imagem ao lado por um GIF/WEBP animado mostrando seu projeto](./moho_follow_through2.gif "GIF animado do projeto. Imagem temporária de Moho Animation https://moho.lostmarble.com/products/moho-pro-special-halls-head-college")
+<img width="1340" height="576" alt="ecosme" src="https://github.com/user-attachments/assets/5b77c08f-177f-4a3e-a603-6a20c31e11a2" />
 
 
 
@@ -36,7 +36,9 @@ Com a estrutura do sistema funcionando, comecei a desenvolver a lógica do diagn
 
 Depois do diagnóstico, implementei a lógica que transforma os pontos obtidos em um plano de ação. A ideia é verificar a pontuação em cada uma das dimensões e, quando ela estiver abaixo de 60, associar uma ação corretiva com descrição da atividade. Quando a pontuação atinge ou ultrapassa esse limite, foi decidido pelo grupo parceiro em apenas apresentar uma mensagem de reforço positivo para a empresa.
 
-Renata:
+Renata: Além de estudar e implementar junto com a Lauren a parte de autenticação e autorização, também participamos das discussões sobre a lógica de pontuação do diagnóstico. Fiquei responsável principalmente pelo desenvolvimento do frontend, incluindo as telas de login, cadastro de empresas e acesso ao sistema. Durante essa etapa, busquei compreender como o frontend se comunicava com o backend por meio de requisições HTTP, enviando os dados preenchidos pelos usuários e recebendo as respostas do servidor. Também estudei como o token de autenticação era armazenado no navegador e enviado nas requisições seguintes, permitindo que o backend identificasse a empresa autenticada e verificasse se ela tinha autorização para acessar determinadas informações.
+
+Também fui responsável pelo deploy inicial da aplicação, para disponibilizar um protótipo ao grupo do Chile. Escolhemos utilizar o Render porque tanto eu quanto a Lauren já tínhamos familiaridade com a plataforma. Durante esse processo, percebi que o frontend, o backend e o banco de dados eram disponibilizados separadamente, sendo necessário configurar corretamente as URLs para permitir a comunicação entre os componentes. Inicialmente, tive dificuldades para carregar e atualizar as perguntas do diagnóstico, pois a URL de conexão com o banco de dados precisava ser corrigida na configuração das variáveis de ambiente do backend. Como ainda não compreendia completamente essa relação, utilizei a IA como apoio para traduzir e interpretar as mensagens de erro, o que me ajudou a identificar o problema e realizar o ajuste necessário.
 
 ### Trechos de código
 
