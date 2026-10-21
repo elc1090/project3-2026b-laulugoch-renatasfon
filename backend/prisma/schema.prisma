@@ -14,13 +14,21 @@ enum Dimensao {
   ECONOMICA
 }
 
+enum TamanhoEmpresa {
+  MICRO
+  PEQUENA
+  MEDIA
+}
+
 model Empresa {
   id             Int           @id @default(autoincrement())
   nomeEmpresa    String
   email          String        @unique
   passwordHash   String
   createdAt      DateTime      @default(now())
-
+  tamanho         TamanhoEmpresa?
+  numFuncionarios Int?
+  
   diagnosticos   Diagnostico[]
 }
 

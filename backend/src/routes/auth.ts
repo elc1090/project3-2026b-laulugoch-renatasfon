@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 
@@ -10,9 +9,24 @@ const router = Router();
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const TAMANOS = ["MICRO", "PEQUENA", "MEDIA"] as const;
+type Tamano = (typeof TAMANOS)[number];
+
+const MAX_FUNCIONARIOS = 100000;
+
+const EMPRESA_SELECT = {
+  id: true,
+  nomeEmpresa: true,
+  email: true,
+  createdAt: true,
+  tamanho: true,
+  numFuncionarios: true,
+} as const;
+
 router.post("/register", async (req, res) => {
   try {
-    const { nomeEmpresa, email, password } = req.body ?? {};
+    const { nomeEmpresa, email, password, tamanho, numFuncionarios } =
+      req.body ?? {};
 
     if (
       typeof nomeEmpresa !== "string" ||
@@ -28,6 +42,26 @@ router.post("/register", async (req, res) => {
     if (normalizedNome.length === 0 || normalizedNome.length > 150) {
       res.status(400).json({
         error: "El nombre de la empresa debe tener entre 1 y 150 caracteres",
+      });
+      return;
+    }
+
+    if (
+      typeof tamanho !== "string" ||
+      !(TAMANOS as readonly string[]).includes(tamanho)
+    ) {
+      res.status(400).json({ error: "Selecciona el tamaño de la empresa" });
+      return;
+    }
+
+    if (
+      typeof numFuncionarios !== "number" ||
+      !Number.isInteger(numFuncionarios) ||
+      numFuncionarios < 1 ||
+      numFuncionarios > MAX_FUNCIONARIOS
+    ) {
+      res.status(400).json({
+        error: "La cantidad de funcionarios debe ser un número entero mayor que 0",
       });
       return;
     }
@@ -66,13 +100,10 @@ router.post("/register", async (req, res) => {
         nomeEmpresa: normalizedNome,
         email: normalizedEmail,
         passwordHash,
+        tamanho: tamanho as Tamano,
+        numFuncionarios,
       },
-      select: {
-        id: true,
-        nomeEmpresa: true,
-        email: true,
-        createdAt: true,
-      },
+      select: EMPRESA_SELECT,
     });
 
     res.status(201).json({
@@ -137,6 +168,8 @@ router.post("/login", async (req, res) => {
         nomeEmpresa: empresa.nomeEmpresa,
         email: empresa.email,
         createdAt: empresa.createdAt,
+        tamanho: empresa.tamanho,
+        numFuncionarios: empresa.numFuncionarios,
       },
       token: signToken(empresa.id),
     });
@@ -150,12 +183,7 @@ router.get("/me", requireAuth, async (_req, res) => {
   try {
     const empresa = await prisma.empresa.findUnique({
       where: { id: res.locals.userId },
-      select: {
-        id: true,
-        nomeEmpresa: true,
-        email: true,
-        createdAt: true,
-      },
+      select: EMPRESA_SELECT,
     });
 
     if (!empresa) {
