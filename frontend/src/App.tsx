@@ -134,7 +134,7 @@ function App() {
           <span className="etiqueta">Tu empresa, en evolución</span>
 
           <h1>
-            Entenda seu negócio.
+            Conoce tu negocio.
             <br />
             Descubre cómo mejorar.
           </h1>
