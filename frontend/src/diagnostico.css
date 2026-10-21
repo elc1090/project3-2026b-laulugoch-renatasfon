@@ -1,4 +1,6 @@
-
+/* =========================================================
+   Diagnóstico (perguntas)
+   ========================================================= */
 .diagnostico-container {
   min-height: 100vh;
   background: #f5f7f8;
@@ -157,6 +159,9 @@
   cursor: not-allowed;
 }
 
+/* =========================================================
+   Resultado do diagnóstico
+   ========================================================= */
 .resultado-cabecalho {
   text-align: center;
   margin-top: 24px;
@@ -212,36 +217,47 @@
   line-height: 1.8;
 }
 
-@media (max-width: 600px) {
-  .diagnostico-container {
-    padding: 24px 12px;
-  }
-
-  .pergunta-card,
-  .resultado-nivel,
-  .resultado-dimensoes,
-  .resultado-destaques {
-    padding: 18px;
-  }
-
-  .opcoes-resposta {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .resultado-destaques {
-    grid-template-columns: 1fr;
-  }
-
-  .diagnostico-acoes {
-    flex-direction: column;
-  }
+/* Botão "Generar mi Plan de Acción" */
+.resultado-chamada {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 20px;
 }
 
-/* ---------- Layout com menu lateral ---------- */
+.resultado-chamada .botao-principal {
+  padding: 18px;
+  font-size: 16px;
+}
+
+.resultado-chamada-nota {
+  text-align: center;
+  color: #64717d;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* =========================================================
+   Layout com menu lateral
+   ========================================================= */
 .layout {
   min-height: 100vh;
   display: flex;
   background: #f5f7f8;
+}
+
+.layout-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-conteudo {
+  flex: 1;
+}
+
+.layout-conteudo .diagnostico-container {
+  min-height: auto;
 }
 
 .menu-lateral {
@@ -258,21 +274,15 @@
   height: 100vh;
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-texto {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
 .menu-lateral-topo {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
   gap: 10px;
 }
 
@@ -332,23 +342,9 @@
   background: #ffffff14;
 }
 
-.layout-corpo {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.layout-conteudo {
-  flex: 1;
-}
-
-.layout-conteudo .diagnostico-container,
-.layout-conteudo .area-logada {
-  min-height: auto;
-}
-
-/* ---------- Barra de progresso horizontal ---------- */
+/* =========================================================
+   Barra de progresso horizontal (etapas)
+   ========================================================= */
 .barra-etapas {
   list-style: none;
   margin: 0;
@@ -398,40 +394,19 @@
   font-weight: 700;
 }
 
-.etapa.atual .etapa-numero {
-  background: #246b59;
-  color: #ffffff;
-}
-
 .etapa.concluida {
   color: #246b59;
 }
 
+.etapa.atual .etapa-numero,
 .etapa.concluida .etapa-numero {
   background: #246b59;
   color: #ffffff;
 }
 
-/* ---------- Botão "Gerar meu Plano de Ação" ---------- */
-.resultado-chamada {
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto 20px;
-}
-
-.resultado-chamada .botao-principal {
-  padding: 18px;
-  font-size: 16px;
-}
-
-.resultado-chamada-nota {
-  text-align: center;
-  color: #64717d;
-  font-size: 13px;
-  margin-top: 10px;
-}
-
-/* ---------- Meu Plano ---------- */
+/* =========================================================
+   Mi Plan
+   ========================================================= */
 .plano-lista {
   width: 100%;
   max-width: 760px;
@@ -449,12 +424,24 @@
   border-radius: 12px;
 }
 
+.plano-tarefa-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .plano-tarefa-dimensao {
   color: #246b59;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
+}
+
+.plano-tarefa-pontos {
+  font-size: 13px;
+  font-weight: 700;
+  color: #a52e28;
 }
 
 .plano-tarefa h2 {
@@ -466,55 +453,6 @@
   margin: 0;
   color: #64717d;
   line-height: 1.6;
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 860px) {
-  .layout {
-    flex-direction: column;
-  }
-
-  .menu-lateral {
-    width: 100%;
-    height: auto;
-    position: static;
-    padding: 16px;
-    gap: 14px;
-  }
-
-  .menu-lateral-nav {
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .menu-lateral-nav button {
-    white-space: nowrap;
-  }
-
-  .barra-etapas {
-    padding: 14px 12px;
-    overflow-x: auto;
-  }
-
-  .etapa-rotulo {
-    display: none;
-  }
-
-  .etapa.atual .etapa-rotulo {
-    display: inline;
-  }
-}
-
-.plano-tarefa-topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.plano-tarefa-pontos {
-  font-size: 13px;
-  font-weight: 700;
-  color: #a52e28;
 }
 
 .plano-reforco {
@@ -547,7 +485,10 @@
   margin: 0;
   color: #64717d;
 }
-/* ---------- Mi empresa: duas colunas ---------- */
+
+/* =========================================================
+   Mi empresa (duas colunas)
+   ========================================================= */
 .inicio-grid {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -558,15 +499,25 @@
   align-items: start;
 }
 
-.tarjeta-empresa {
-  padding: 32px;
-  border-radius: 14px;
+/* Fundo compartilhado pelos dois cards */
+.tarjeta-empresa,
+.inicio-grid .cartao-logado {
   background: linear-gradient(135deg, #fde8ef 0%, #eaf5ef 100%);
   border: 1px solid #f3d3de;
   box-shadow: 0 8px 32px #172d3d12;
 }
 
-.tarjeta-empresa .etiqueta {
+.tarjeta-empresa {
+  padding: 32px;
+  border-radius: 14px;
+}
+
+.inicio-grid .cartao-logado {
+  max-width: none;
+}
+
+.tarjeta-empresa .etiqueta,
+.inicio-grid .cartao-logado .etiqueta {
   color: #246b59;
 }
 
@@ -614,9 +565,71 @@
   margin: 0 0 10px;
 }
 
+/* =========================================================
+   Responsivo
+   ========================================================= */
 @media (max-width: 860px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .menu-lateral {
+    width: 100%;
+    height: auto;
+    position: static;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .menu-lateral-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .menu-lateral-nav button {
+    white-space: nowrap;
+  }
+
+  .barra-etapas {
+    padding: 14px 12px;
+    overflow-x: auto;
+  }
+
+  .etapa-rotulo {
+    display: none;
+  }
+
+  .etapa.atual .etapa-rotulo {
+    display: inline;
+  }
+
   .inicio-grid {
     grid-template-columns: 1fr;
     padding: 20px 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .diagnostico-container {
+    padding: 24px 12px;
+  }
+
+  .pergunta-card,
+  .resultado-nivel,
+  .resultado-dimensoes,
+  .resultado-destaques {
+    padding: 18px;
+  }
+
+  .opcoes-resposta {
+    grid-template-columns: 1fr;
+  }
+
+  .resultado-destaques {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostico-acoes {
+    flex-direction: column;
   }
 }
