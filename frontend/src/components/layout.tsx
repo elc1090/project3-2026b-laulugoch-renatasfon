@@ -39,7 +39,7 @@ function Layout({
     <div className="layout">
       <aside className="menu-lateral">
         <div className="menu-lateral-topo">
-          <Logo tamanho={64}/>
+          <Logo tamanho={90}/>
           <span className="menu-empresa" title={nomeEmpresa}>
             {nomeEmpresa}
           </span>
