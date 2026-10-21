@@ -9,8 +9,6 @@ export type Dimensao =
   | 'AMBIENTAL'
   | 'SOCIAL'
   | 'ECONOMICA'
-  | 'GOBERNANZA'
-  | 'COMUNIDAD'
 
 export type Pergunta = {
   id: string
@@ -33,4 +31,12 @@ export type Resultado = {
   dimensoes: { dimensao: Dimensao; pontuacao: number }[]
   fortalezas: Dimensao[]
   areasDeMelhoria: Dimensao[]
+}
+
+export type Tarefa = {
+  id: number
+  dimensao: Dimensao
+  titulo: string
+  descricao?: string
+  status?: string
 }

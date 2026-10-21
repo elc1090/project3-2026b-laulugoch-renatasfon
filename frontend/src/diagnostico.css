@@ -83,7 +83,7 @@
 
 .opcoes-resposta {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -234,5 +234,273 @@
 
   .diagnostico-acoes {
     flex-direction: column;
+  }
+}
+
+/* ---------- Layout com menu lateral ---------- */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7f8;
+}
+
+.menu-lateral {
+  width: 240px;
+  flex-shrink: 0;
+  background: #172d3d;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-texto {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.menu-lateral-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-empresa {
+  color: #b9c8d2;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-lateral-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.menu-lateral-nav button {
+  border: none;
+  background: transparent;
+  color: #d2dce3;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-lateral-nav button:hover:not(:disabled) {
+  background: #ffffff14;
+}
+
+.menu-lateral-nav button.ativo {
+  background: #246b59;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.menu-lateral-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.menu-sair {
+  border: 1px solid #ffffff40;
+  background: transparent;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.menu-sair:hover {
+  background: #ffffff14;
+}
+
+.layout-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-conteudo {
+  flex: 1;
+}
+
+.layout-conteudo .diagnostico-container,
+.layout-conteudo .area-logada {
+  min-height: auto;
+}
+
+/* ---------- Barra de progresso horizontal ---------- */
+.barra-etapas {
+  list-style: none;
+  margin: 0;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ebef;
+}
+
+.etapa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  color: #8a949e;
+  font-size: 13px;
+}
+
+.etapa:not(:last-child)::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  margin: 0 12px;
+  background: #e6ebef;
+}
+
+.etapa.concluida:not(:last-child)::after {
+  background: #246b59;
+}
+
+.etapa-numero {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6ebef;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.etapa.atual {
+  color: #172d3d;
+  font-weight: 700;
+}
+
+.etapa.atual .etapa-numero {
+  background: #246b59;
+  color: #ffffff;
+}
+
+.etapa.concluida {
+  color: #246b59;
+}
+
+.etapa.concluida .etapa-numero {
+  background: #246b59;
+  color: #ffffff;
+}
+
+/* ---------- Botão "Gerar meu Plano de Ação" ---------- */
+.resultado-chamada {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto 20px;
+}
+
+.resultado-chamada .botao-principal {
+  padding: 18px;
+  font-size: 16px;
+}
+
+.resultado-chamada-nota {
+  text-align: center;
+  color: #64717d;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* ---------- Meu Plano ---------- */
+.plano-lista {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.plano-tarefa,
+.plano-vazio {
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid #e6ebef;
+  border-radius: 12px;
+}
+
+.plano-tarefa-dimensao {
+  color: #246b59;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.plano-tarefa h2 {
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+.plano-tarefa p {
+  margin: 0;
+  color: #64717d;
+  line-height: 1.6;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 860px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .menu-lateral {
+    width: 100%;
+    height: auto;
+    position: static;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .menu-lateral-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .menu-lateral-nav button {
+    white-space: nowrap;
+  }
+
+  .barra-etapas {
+    padding: 14px 12px;
+    overflow-x: auto;
+  }
+
+  .etapa-rotulo {
+    display: none;
+  }
+
+  .etapa.atual .etapa-rotulo {
+    display: inline;
   }
 }

@@ -1,8 +1,10 @@
-
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { apiFetch, ApiError, mensagemDeErro } from './api'
+import { nivelPorPontuacao } from './dimensoes'
 import type { Resultado, Usuario } from './types'
 import Diagnostico from './components/Diagnostico'
+import Layout, { type Tela } from './components/layout'
+import MeuPlano from './components/MeuPlano'
 import ResultadoDiagnostico from './components/ResultadoDiagnostico'
 
 type Props = {
@@ -11,17 +13,15 @@ type Props = {
 }
 
 function AreaLogada({ usuario, onSair }: Props) {
-  const [tela, setTela] = useState<'inicio' | 'diagnostico' | 'resultado'>(
-    'inicio',
-  )
+  const [tela, setTela] = useState<Tela>('inicio')
   const [ultimoResultado, setUltimoResultado] = useState<Resultado | null>(
     null,
   )
-  const [resultadoAtual, setResultadoAtual] = useState<Resultado | null>(
-    null,
-  )
+  const [resultadoAtual, setResultadoAtual] = useState<Resultado | null>(null)
   const [carregando, setCarregando] = useState(true)
   const [erro, setErro] = useState('')
+  const [gerandoPlano, setGerandoPlano] = useState(false)
+  const [erroPlano, setErroPlano] = useState('')
 
   useEffect(() => {
     let ativo = true
@@ -57,105 +57,176 @@ function AreaLogada({ usuario, onSair }: Props) {
     }
   }, [onSair])
 
+  function irPara(novaTela: Tela) {
+    setErroPlano('')
+
+    if (novaTela === 'resultado') {
+      setResultadoAtual((atual) => atual ?? ultimoResultado)
+    }
+
+    if (novaTela === 'diagnostico') {
+      setErro('')
+    }
+
+    setTela(novaTela)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   function concluirDiagnostico(resultado: Resultado) {
     setResultadoAtual(resultado)
     setUltimoResultado(resultado)
-    setTela('resultado')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    irPara('resultado')
   }
 
   function iniciarDiagnostico() {
-    setErro('')
     setResultadoAtual(null)
-    setTela('diagnostico')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    irPara('diagnostico')
   }
 
-  if (tela === 'diagnostico') {
-    return (
-      <Diagnostico
-        onConcluir={concluirDiagnostico}
-        onCancelar={() => setTela('inicio')}
-      />
-    )
+  async function gerarPlano() {
+    if (!resultadoAtual) {
+      return
+    }
+
+    setGerandoPlano(true)
+    setErroPlano('')
+
+    try {
+      // PROVISÓRIO: trocar pela rota real que insere as tarefas
+      await apiFetch('/planos/gerar', {
+        method: 'POST',
+        body: JSON.stringify({ diagnosticoId: resultadoAtual.id }),
+      })
+
+      irPara('plano')
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        onSair()
+      } else {
+        setErroPlano(mensagemDeErro(error))
+      }
+    } finally {
+      setGerandoPlano(false)
+    }
   }
 
-  if (tela === 'resultado' && resultadoAtual) {
+  const sairDoPlano = useCallback(() => onSair(), [onSair])
+
+  function renderizarConteudo() {
+    if (tela === 'diagnostico') {
+      return (
+        <Diagnostico
+          onConcluir={concluirDiagnostico}
+          onCancelar={() => irPara('inicio')}
+        />
+      )
+    }
+
+    if (tela === 'resultado' && resultadoAtual) {
+      return (
+        <ResultadoDiagnostico
+          resultado={resultadoAtual}
+          gerandoPlano={gerandoPlano}
+          erroPlano={erroPlano}
+          onGerarPlano={gerarPlano}
+          onNovoDiagnostico={iniciarDiagnostico}
+          onVoltar={() => irPara('inicio')}
+        />
+      )
+    }
+
+    if (tela === 'plano') {
+      return (
+        <MeuPlano
+          onSair={sairDoPlano}
+          onIrParaDiagnostico={iniciarDiagnostico}
+        />
+      )
+    }
+
+    if (tela === 'acompanhamento') {
+      return (
+        <div className="diagnostico-container">
+          <header className="resultado-cabecalho">
+            <p>EcoSME</p>
+            <h1>Acompanhamento</h1>
+            <p>Em breve você poderá acompanhar a evolução do seu plano aqui.</p>
+          </header>
+        </div>
+      )
+    }
+
     return (
-      <ResultadoDiagnostico
-        resultado={resultadoAtual}
-        onNovoDiagnostico={iniciarDiagnostico}
-        onVoltar={() => setTela('inicio')}
-      />
+      <div className="area-logada">
+        <div className="cartao-logado">
+          <span className="etiqueta">Área da empresa</span>
+
+          <h1>Bem-vindo(a) ao EcoSME, {usuario.nomeEmpresa}!</h1>
+
+          <p>
+            <strong>E-mail:</strong> {usuario.email}
+          </p>
+
+          {erro && (
+            <p className="mensagem mensagem-erro" role="alert">
+              {erro}
+            </p>
+          )}
+
+          {carregando ? (
+            <p>Verificando seu diagnóstico...</p>
+          ) : ultimoResultado ? (
+            <section className="ultimo-diagnostico">
+              <h2>Seu último diagnóstico</h2>
+              <p>
+                Pontuação: <strong>{ultimoResultado.pontuacao}/100</strong>
+              </p>
+              <p>
+                Nível:{' '}
+                <strong>{nivelPorPontuacao(ultimoResultado.pontuacao)}</strong>
+              </p>
+
+              <button
+                type="button"
+                className="botao-principal"
+                onClick={() => irPara('resultado')}
+              >
+                Ver resultado completo
+              </button>
+            </section>
+          ) : (
+            <section className="ultimo-diagnostico">
+              <h2>Comece seu diagnóstico</h2>
+              <p>
+                Responda às perguntas para conhecer o nível de
+                sustentabilidade da sua empresa.
+              </p>
+            </section>
+          )}
+
+          <button
+            type="button"
+            className="botao-principal"
+            onClick={iniciarDiagnostico}
+            disabled={carregando}
+          >
+            Iniciar novo diagnóstico
+          </button>
+        </div>
+      </div>
     )
   }
 
   return (
-    <main className="area-logada">
-      <div className="cartao-logado">
-        <span className="etiqueta">Área da empresa</span>
-
-        <h1>Bem-vinda, {usuario.nomeEmpresa}!</h1>
-
-        <p>Você está autenticada no sistema.</p>
-
-        <p>
-          <strong>E-mail:</strong> {usuario.email}
-        </p>
-
-        {erro && (
-          <p className="mensagem mensagem-erro" role="alert">
-            {erro}
-          </p>
-        )}
-
-        {carregando ? (
-          <p>Verificando seu diagnóstico...</p>
-        ) : ultimoResultado ? (
-          <section className="ultimo-diagnostico">
-            <h2>Seu último diagnóstico</h2>
-            <p>
-              Pontuação: <strong>{ultimoResultado.pontuacao}/100</strong>
-            </p>
-            <p>
-              Nível: <strong>{ultimoResultado.nivel}</strong>
-            </p>
-
-            <button
-              type="button"
-              className="botao-principal"
-              onClick={() => {
-                setResultadoAtual(ultimoResultado)
-                setTela('resultado')
-              }}
-            >
-              Ver resultado completo
-            </button>
-          </section>
-        ) : (
-          <section className="ultimo-diagnostico">
-            <h2>Comece seu diagnóstico</h2>
-            <p>
-              Responda às perguntas para conhecer o nível de sustentabilidade
-              da sua empresa.
-            </p>
-          </section>
-        )}
-
-        <button
-          type="button"
-          className="botao-principal"
-          onClick={iniciarDiagnostico}
-          disabled={carregando}
-        >
-          Iniciar novo diagnóstico
-        </button>
-
-        <button className="logout-button" onClick={onSair}>
-          Sair da conta
-        </button>
-      </div>
-    </main>
+    <Layout
+      nomeEmpresa={usuario.nomeEmpresa}
+      telaAtual={tela}
+      temResultado={ultimoResultado !== null}
+      onNavegar={irPara}
+      onSair={onSair}
+    >
+      {renderizarConteudo()}
+    </Layout>
   )
 }
 

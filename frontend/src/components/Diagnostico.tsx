@@ -1,18 +1,11 @@
-
 import { useEffect, useState } from 'react'
 import { apiFetch, mensagemDeErro } from '../api'
 import '../diagnostico.css'
-import { NOME_DIMENSAO } from '../dimensoes'
-import type {
-  Dimensao,
-  OpcaoResposta,
-  Pergunta,
-  Resultado,
-} from '../types'
+import { DIMENSOES_ATIVAS, NOME_DIMENSAO, ehDimensaoAtiva } from '../dimensoes'
+import type { Pergunta, Resultado } from '../types'
 
 type DadosPerguntas = {
   perguntas: Pergunta[]
-  opcoes: OpcaoResposta[]
 }
 
 type Props = {
@@ -20,17 +13,15 @@ type Props = {
   onCancelar: () => void
 }
 
-const ORDEM_DIMENSOES: Dimensao[] = [
-  'AMBIENTAL',
-  'SOCIAL',
-  'ECONOMICA',
-  'GOBERNANZA',
-  'COMUNIDAD',
+// Escala padronizada: um único seletor por pergunta
+const OPCOES_RESPOSTA = [
+  { valor: 10, rotulo: 'Sim, completamente' },
+  { valor: 5, rotulo: 'Parcialmente / Em andamento' },
+  { valor: 0, rotulo: 'Não' },
 ]
 
 function Diagnostico({ onConcluir, onCancelar }: Props) {
   const [perguntas, setPerguntas] = useState<Pergunta[]>([])
-  const [opcoes, setOpcoes] = useState<OpcaoResposta[]>([])
   const [respostas, setRespostas] = useState<Record<string, number>>({})
   const [etapa, setEtapa] = useState(0)
   const [carregando, setCarregando] = useState(true)
@@ -42,8 +33,11 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
       try {
         const dados = await apiFetch<DadosPerguntas>('/perguntas')
 
-        setPerguntas(dados.perguntas)
-        setOpcoes(dados.opcoes)
+        setPerguntas(
+          dados.perguntas.filter((pergunta) =>
+            ehDimensaoAtiva(pergunta.dimensao),
+          ),
+        )
       } catch (error) {
         setErro(mensagemDeErro(error))
       } finally {
@@ -54,7 +48,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
     carregarPerguntas()
   }, [])
 
-  const dimensaoAtual = ORDEM_DIMENSOES[etapa]
+  const dimensaoAtual = DIMENSOES_ATIVAS[etapa]
 
   const perguntasDaEtapa = perguntas
     .filter((pergunta) => pergunta.dimensao === dimensaoAtual)
@@ -88,7 +82,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
     }
 
     setErro('')
-    setEtapa((atual) => Math.min(atual + 1, ORDEM_DIMENSOES.length - 1))
+    setEtapa((atual) => Math.min(atual + 1, DIMENSOES_ATIVAS.length - 1))
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -133,26 +127,26 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
 
   if (carregando) {
     return (
-      <main className="diagnostico-container">
+      <div className="diagnostico-container">
         <p>Carregando perguntas...</p>
-      </main>
+      </div>
     )
   }
 
   if (perguntas.length === 0) {
     return (
-      <main className="diagnostico-container">
+      <div className="diagnostico-container">
         <h1>Não foi possível carregar o diagnóstico</h1>
         <p>{erro || 'Nenhuma pergunta foi encontrada.'}</p>
         <button type="button" onClick={onCancelar}>
           Voltar à área da empresa
         </button>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="diagnostico-container">
+    <div className="diagnostico-container">
       <header className="diagnostico-cabecalho">
         <button type="button" onClick={onCancelar}>
           Sair do diagnóstico
@@ -161,7 +155,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
         <p>Diagnóstico de sustentabilidade</p>
         <h1>{NOME_DIMENSAO[dimensaoAtual]}</h1>
         <p>
-          Etapa {etapa + 1} de {ORDEM_DIMENSOES.length}
+          Etapa {etapa + 1} de {DIMENSOES_ATIVAS.length}
         </p>
       </header>
 
@@ -184,7 +178,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
             </h2>
 
             <div className="opcoes-resposta">
-              {opcoes.map((opcao) => (
+              {OPCOES_RESPOSTA.map((opcao) => (
                 <label key={opcao.valor}>
                   <input
                     type="radio"
@@ -218,12 +212,8 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
           Etapa anterior
         </button>
 
-        {etapa < ORDEM_DIMENSOES.length - 1 ? (
-          <button
-            type="button"
-            onClick={avancar}
-            disabled={!etapaCompleta}
-          >
+        {etapa < DIMENSOES_ATIVAS.length - 1 ? (
+          <button type="button" onClick={avancar} disabled={!etapaCompleta}>
             Próxima etapa
           </button>
         ) : (
@@ -236,7 +226,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
           </button>
         )}
       </footer>
-    </main>
+    </div>
   )
 }
 
