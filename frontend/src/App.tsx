@@ -42,7 +42,7 @@ function App() {
         const resultado = await resposta.json()
         setUsuario(resultado.user)
       } catch {
-        setMensagem('Não foi possível verificar sua sessão.')
+        setMensagem('No fue posible verificar tu sesión.')
         setErro(true)
       } finally {
         setVerificandoSessao(false)
@@ -81,7 +81,7 @@ function App() {
         throw new Error(
           resultado.error ||
             resultado.message ||
-            'Não foi possível realizar a operação.',
+            'No fue posible completar la operación.',
         )
       }
 
@@ -95,7 +95,7 @@ function App() {
       if (error instanceof Error) {
         setMensagem(error.message)
       } else {
-        setMensagem('Não foi possível conectar ao servidor.')
+        setMensagem('No fue posible conectar con el servidor.')
       }
     } finally {
       setCarregando(false)
@@ -118,7 +118,7 @@ function App() {
   }, [])
 
   if (verificandoSessao) {
-    return <main className="tela-carregamento">Verificando sessão...</main>
+    return <main className="tela-carregamento">Verificando sesión...</main>
   }
 
   if (usuario) {
@@ -131,34 +131,34 @@ function App() {
         <span className="marca"><Logo tamanho={125} /></span>
 
         <div className="apresentacao-conteudo">
-          <span className="etiqueta">Sua empresa, em evolução</span>
+          <span className="etiqueta">Tu empresa, en evolución</span>
 
           <h1>
             Entenda seu negócio.
             <br />
-            Descubra como melhorar.
+            Descubre cómo mejorar.
           </h1>
 
           <p>
-            Responda a algumas perguntas sobre sua empresa e receba um
-            diagnóstico com oportunidades de melhoria e recomendações.
+            Responde algunas preguntas sobre tu empresa y recibe un
+            diagnóstico con oportunidades de mejora y recomendaciones.
           </p>
         </div>
 
         <span className="rodape-apresentacao">
-          Uma nova perspectiva para o seu negócio.
+          Una nueva perspectiva para tu negocio.
         </span>
       </section>
 
       <section className="area-formulario">
         <div className="cartao">
-          <div className="alternador" aria-label="Tipo de acesso">
+          <div className="alternador" aria-label="Tipo de acceso">
             <button
               type="button"
               className={modo === 'login' ? 'ativo' : ''}
               onClick={() => trocarModo('login')}
             >
-              Entrar
+              Iniciar sesión
             </button>
 
             <button
@@ -166,31 +166,31 @@ function App() {
               className={modo === 'cadastro' ? 'ativo' : ''}
               onClick={() => trocarModo('cadastro')}
             >
-              Criar conta
+              Crear cuenta
             </button>
           </div>
 
           <div className="titulo-formulario">
             <h2>
               {modo === 'login'
-                ? 'Bem-vinda de volta!'
-                : 'Cadastre sua empresa'}
+                ? '¡Bienvenido(a) de nuevo!'
+                : 'Registra tu empresa'}
             </h2>
             <p>
               {modo === 'login'
-                ? 'Entre para continuar para sua área empresarial.'
-                : 'Preencha os dados para começar.'}
+                ? 'Inicia sesión para continuar a tu área de empresa.'
+                : 'Completa los datos para comenzar.'}
             </p>
           </div>
 
           <form onSubmit={handleSubmit}>
             {modo === 'cadastro' && (
               <div className="campo">
-                <label htmlFor="nomeEmpresa">Nome da empresa</label>
+                <label htmlFor="nomeEmpresa">Nombre de la empresa</label>
                 <input
                   id="nomeEmpresa"
                   type="text"
-                  placeholder="Ex.: Minha Empresa"
+                  placeholder="Ej.: Mi Empresa"
                   value={nomeEmpresa}
                   onChange={(event) => setNomeEmpresa(event.target.value)}
                   maxLength={150}
@@ -201,11 +201,11 @@ function App() {
             )}
 
             <div className="campo">
-              <label htmlFor="email">E-mail</label>
+              <label htmlFor="email">Correo electrónico</label>
               <input
                 id="email"
                 type="email"
-                placeholder="voce@empresa.com"
+                placeholder="tu@empresa.com"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
@@ -215,11 +215,11 @@ function App() {
             </div>
 
             <div className="campo">
-              <label htmlFor="password">Senha</label>
+              <label htmlFor="password">Contraseña</label>
               <input
                 id="password"
                 type="password"
-                placeholder="Mínimo de 8 caracteres"
+                placeholder="Mínimo 8 caracteres"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete={
@@ -245,24 +245,24 @@ function App() {
               disabled={carregando}
             >
               {carregando
-                ? 'Aguarde...'
+                ? 'Espera...'
                 : modo === 'login'
-                  ? 'Entrar na minha conta'
-                  : 'Criar minha conta'}
+                  ? 'Ingresar a mi cuenta'
+                  : 'Crear mi cuenta'}
             </button>
           </form>
 
           <p className="alternativa">
             {modo === 'login'
-              ? 'Ainda não tem uma conta?'
-              : 'Já tem uma conta?'}{' '}
+              ? '¿Aún no tienes una cuenta?'
+              : '¿Ya tienes una cuenta?'}{' '}
             <button
               type="button"
               onClick={() =>
                 trocarModo(modo === 'login' ? 'cadastro' : 'login')
               }
             >
-              {modo === 'login' ? 'Cadastre sua empresa' : 'Fazer login'}
+              {modo === 'login' ? 'Registra tu empresa' : 'Iniciar sesión'}
             </button>
           </p>
         </div>

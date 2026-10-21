@@ -15,9 +15,9 @@ type Props = {
 
 // Escala padronizada: um único seletor por pergunta
 const OPCOES_RESPOSTA = [
-  { valor: 10, rotulo: 'Sim, completamente' },
-  { valor: 5, rotulo: 'Parcialmente / Em andamento' },
-  { valor: 0, rotulo: 'Não' },
+  { valor: 10, rotulo: 'Sí, completamente' },
+  { valor: 5, rotulo: 'Parcialmente / En proceso' },
+  { valor: 0, rotulo: 'No' },
 ]
 
 function Diagnostico({ onConcluir, onCancelar }: Props) {
@@ -77,7 +77,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
 
   function avancar() {
     if (!etapaCompleta) {
-      setErro('Responda a todas as perguntas desta etapa para continuar.')
+      setErro('Responde todas las preguntas de esta etapa para continuar.')
       return
     }
 
@@ -94,12 +94,12 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
 
   async function enviarDiagnostico() {
     if (!etapaCompleta) {
-      setErro('Responda a todas as perguntas desta etapa para continuar.')
+      setErro('Responde todas las preguntas de esta etapa para continuar.')
       return
     }
 
     if (respondidas !== totalPerguntas) {
-      setErro('Confira se todas as perguntas foram respondidas.')
+      setErro('Verifica que todas las preguntas estén respondidas.')
       return
     }
 
@@ -128,7 +128,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
   if (carregando) {
     return (
       <div className="diagnostico-container">
-        <p>Carregando perguntas...</p>
+        <p>Cargando preguntas...</p>
       </div>
     )
   }
@@ -136,10 +136,10 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
   if (perguntas.length === 0) {
     return (
       <div className="diagnostico-container">
-        <h1>Não foi possível carregar o diagnóstico</h1>
-        <p>{erro || 'Nenhuma pergunta foi encontrada.'}</p>
+        <h1>No fue posible cargar el diagnóstico</h1>
+        <p>{erro || 'No se encontró ninguna pregunta.'}</p>
         <button type="button" onClick={onCancelar}>
-          Voltar à área da empresa
+          Volver al área de la empresa
         </button>
       </div>
     )
@@ -149,10 +149,10 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
     <div className="diagnostico-container">
       <header className="diagnostico-cabecalho">
         <button type="button" onClick={onCancelar}>
-          Sair do diagnóstico
+          Salir del diagnóstico
         </button>
 
-        <p>Diagnóstico de sustentabilidade</p>
+        <p>Diagnóstico de sostenibilidad</p>
         <h1>{NOME_DIMENSAO[dimensaoAtual]}</h1>
         <p>
           Etapa {etapa + 1} de {DIMENSOES_ATIVAS.length}
@@ -161,9 +161,9 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
 
       <section className="diagnostico-progresso">
         <div className="progresso-texto">
-          <span>Progresso geral</span>
+          <span>Progreso general</span>
           <span>
-            {respondidas} de {totalPerguntas} perguntas
+            {respondidas} de {totalPerguntas} preguntas
           </span>
         </div>
 
@@ -214,7 +214,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
 
         {etapa < DIMENSOES_ATIVAS.length - 1 ? (
           <button type="button" onClick={avancar} disabled={!etapaCompleta}>
-            Próxima etapa
+            Siguiente etapa
           </button>
         ) : (
           <button
@@ -222,7 +222,7 @@ function Diagnostico({ onConcluir, onCancelar }: Props) {
             onClick={enviarDiagnostico}
             disabled={!etapaCompleta || enviando}
           >
-            {enviando ? 'Enviando...' : 'Concluir diagnóstico'}
+            {enviando ? 'Enviando...' : 'Finalizar diagnóstico'}
           </button>
         )}
       </footer>

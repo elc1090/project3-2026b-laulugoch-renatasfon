@@ -41,22 +41,22 @@ function ResultadoDiagnostico({
   return (
     <div className="diagnostico-container">
       <header className="resultado-cabecalho">
-        <p>Diagnóstico de sustentabilidade</p>
-        <h1>Resultado da avaliação</h1>
+        <p>Diagnóstico de sostenibilidad</p>
+        <h1>Resultado de la evaluación</h1>
         <p>
-          Sua empresa obteve uma pontuação de{' '}
+          Tu empresa obtuvo un puntaje de{' '}
           <strong>{resultado.pontuacao}/100</strong>.
         </p>
       </header>
 
       <section className="resultado-nivel">
-        <span>Nível de sustentabilidade</span>
+        <span>Nivel de sostenibilidad</span>
         <h2>{nivel}</h2>
         <p>{ENFOQUE_NIVEL[nivel]}</p>
       </section>
 
       <section className="resultado-dimensoes">
-        <h2>Pontuação por dimensão</h2>
+        <h2>Puntaje por dimensión</h2>
 
         {dimensoes.map((item) => (
           <article className="dimensao-resultado" key={item.dimensao}>
@@ -80,12 +80,12 @@ function ResultadoDiagnostico({
               ))}
             </ul>
           ) : (
-            <p>Não há dimensões destacadas.</p>
+            <p>No hay dimensiones destacadas.</p>
           )}
         </div>
 
         <div>
-          <h2>Áreas de melhoria</h2>
+          <h2>Áreas de mejora</h2>
           {areasDeMelhoria.length > 0 ? (
             <ul>
               {areasDeMelhoria.map((dimensao) => (
@@ -93,7 +93,7 @@ function ResultadoDiagnostico({
               ))}
             </ul>
           ) : (
-            <p>Não há áreas identificadas.</p>
+            <p>No hay áreas identificadas.</p>
           )}
         </div>
       </section>
@@ -111,23 +111,23 @@ function ResultadoDiagnostico({
           onClick={onGerarPlano}
           disabled={gerandoPlano}
         >
-          {gerandoPlano ? 'Gerando seu plano...' : 'Gerar meu Plano de Ação'}
+          {gerandoPlano ? 'Generando tu plan...' : 'Generar mi Plan de Acción'}
         </button>
 
         {dimensoesAbaixoDoLimite === 0 && (
           <p className="resultado-chamada-nota">
-            Todas as dimensões estão acima de {LIMITE_PLANO} pontos.
+            Todas las dimensiones tienen {LIMITE_PLANO} puntos o más.
           </p>
         )}
       </section>
 
       <footer className="diagnostico-acoes">
         <button type="button" onClick={onVoltar}>
-          Voltar à área da empresa
+          Volver al área de la empresa
         </button>
 
         <button type="button" onClick={onNovoDiagnostico}>
-          Fazer novo diagnóstico
+          Hacer un nuevo diagnóstico
         </button>
       </footer>
     </div>

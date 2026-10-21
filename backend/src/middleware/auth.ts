@@ -10,7 +10,7 @@ export function requireAuth(
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith("Bearer ")) {
-    res.status(401).json({ error: "Token ausente" });
+    res.status(401).json({ error: "Falta el token de autenticación" });
     return;
   }
 
@@ -18,7 +18,7 @@ export function requireAuth(
   const userId = verifyToken(token);
 
   if (userId === null) {
-    res.status(401).json({ error: "Token inválido ou expirado" });
+    res.status(401).json({ error: "Token inválido o expirado" });
     return;
   }
 

@@ -51,14 +51,14 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
     <div className="diagnostico-container">
       <header className="resultado-cabecalho">
         <p>EcoSME</p>
-        <h1>Meu Plano de Ação</h1>
+        <h1>Mi Plan de Acción</h1>
         <p>
-          Ações sugeridas para as dimensões com menos de {LIMITE_PLANO} pontos.
+          Acciones sugeridas para las dimensiones con menos de {LIMITE_PLANO} puntos.
         </p>
       </header>
 
       <section className="plano-lista">
-        {carregando && <p>Carregando seu plano...</p>}
+        {carregando && <p>Cargando tu plan...</p>}
 
         {erro && (
           <p className="mensagem mensagem-erro" role="alert">
@@ -68,9 +68,9 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
 
         {semDiagnostico && (
           <div className="plano-vazio">
-            <p>Faça o diagnóstico antes de ver o seu plano de ação.</p>
+            <p>Realiza el diagnóstico antes de ver tu plan de acción.</p>
             <button type="button" onClick={onIrParaDiagnostico}>
-              Fazer diagnóstico
+              Hacer diagnóstico
             </button>
           </div>
         )}

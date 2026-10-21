@@ -32,7 +32,7 @@ router.get("/", requireAuth, async (_req, res) => {
     console.error("Erro ao buscar perguntas:", error);
 
     res.status(500).json({
-      error: "Não foi possível buscar as perguntas",
+      error: "No fue posible obtener las preguntas",
     });
   }
 });

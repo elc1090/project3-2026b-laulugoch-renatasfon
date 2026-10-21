@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
       typeof email !== "string" ||
       typeof password !== "string"
     ) {
-      res.status(400).json({ error: "Todos os campos são obrigatórios" });
+      res.status(400).json({ error: "Todos los campos son obligatorios" });
       return;
     }
 
@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
 
     if (normalizedNome.length === 0 || normalizedNome.length > 150) {
       res.status(400).json({
-        error: "O nome da empresa deve ter entre 1 e 150 caracteres",
+        error: "El nombre de la empresa debe tener entre 1 y 150 caracteres",
       });
       return;
     }
@@ -39,13 +39,13 @@ router.post("/register", async (req, res) => {
       normalizedEmail.length > 254 ||
       !EMAIL_REGEX.test(normalizedEmail)
     ) {
-      res.status(400).json({ error: "Informe um e-mail válido" });
+      res.status(400).json({ error: "Ingresa un correo electrónico válido" });
       return;
     }
 
     if (password.length < 8 || Buffer.byteLength(password, "utf8") > 72) {
       res.status(400).json({
-        error: "A senha deve ter pelo menos 8 caracteres e no máximo 72 bytes",
+        error: "La contraseña debe tener al menos 8 caracteres y un máximo de 72 bytes",
       });
       return;
     }
@@ -55,7 +55,7 @@ router.post("/register", async (req, res) => {
     });
 
     if (existingEmpresa) {
-      res.status(409).json({ error: "Este e-mail já está cadastrado" });
+      res.status(409).json({ error: "Este correo electrónico ya está registrado" });
       return;
     }
 
@@ -76,7 +76,7 @@ router.post("/register", async (req, res) => {
     });
 
     res.status(201).json({
-      message: "Conta criada com sucesso",
+      message: "Cuenta creada con éxito",
       user: empresa,
       token: signToken(empresa.id),
     });
@@ -87,12 +87,12 @@ router.post("/register", async (req, res) => {
       "code" in error &&
       error.code === "P2002"
     ) {
-      res.status(409).json({ error: "Este e-mail já está cadastrado" });
+      res.status(409).json({ error: "Este correo electrónico ya está registrado" });
       return;
     }
 
     console.error("Erro ao cadastrar empresa:", error);
-    res.status(500).json({ error: "Não foi possível criar a conta" });
+    res.status(500).json({ error: "No fue posible crear la cuenta" });
   }
 });
 
@@ -101,7 +101,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body ?? {};
 
     if (typeof email !== "string" || typeof password !== "string") {
-      res.status(400).json({ error: "E-mail e senha são obrigatórios" });
+      res.status(400).json({ error: "El correo electrónico y la contraseña son obligatorios" });
       return;
     }
 
@@ -113,7 +113,7 @@ router.post("/login", async (req, res) => {
       !EMAIL_REGEX.test(normalizedEmail) ||
       Buffer.byteLength(password, "utf8") > 72
     ) {
-      res.status(400).json({ error: "Dados de login inválidos" });
+      res.status(400).json({ error: "Datos de inicio de sesión inválidos" });
       return;
     }
 
@@ -126,12 +126,12 @@ router.post("/login", async (req, res) => {
       : false;
 
     if (!empresa || !passwordOk) {
-      res.status(401).json({ error: "E-mail ou senha incorretos" });
+      res.status(401).json({ error: "Correo electrónico o contraseña incorrectos" });
       return;
     }
 
     res.json({
-      message: "Login realizado com sucesso",
+      message: "Inicio de sesión exitoso",
       user: {
         id: empresa.id,
         nomeEmpresa: empresa.nomeEmpresa,
@@ -142,7 +142,7 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     console.error("Erro ao fazer login:", error);
-    res.status(500).json({ error: "Não foi possível fazer login" });
+    res.status(500).json({ error: "No fue posible iniciar sesión" });
   }
 });
 
@@ -159,14 +159,14 @@ router.get("/me", requireAuth, async (_req, res) => {
     });
 
     if (!empresa) {
-      res.status(404).json({ error: "Empresa não encontrada" });
+      res.status(404).json({ error: "Empresa no encontrada" });
       return;
     }
 
     res.json({ user: empresa });
   } catch (error) {
     console.error("Erro ao buscar empresa:", error);
-    res.status(500).json({ error: "Não foi possível buscar a empresa" });
+    res.status(500).json({ error: "No fue posible obtener la empresa" });
   }
 });
 

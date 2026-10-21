@@ -33,7 +33,7 @@ export async function apiFetch<T>(
     throw new ApiError(
       dados?.error ||
         dados?.message ||
-        'Não foi possível completar a operação.',
+        'No fue posible completar la operación.',
       resposta.status,
     )
   }
@@ -46,5 +46,5 @@ export function mensagemDeErro(erro: unknown): string {
     return erro.message
   }
 
-  return 'Não foi possível conectar ao servidor.'
+  return 'No fue posible conectar con el servidor.'
 }

@@ -122,8 +122,8 @@ function AreaLogada({ usuario, onSair }: Props) {
         <div className="diagnostico-container">
           <header className="resultado-cabecalho">
             <p>EcoSME</p>
-            <h1>Acompanhamento</h1>
-            <p>Em breve você poderá acompanhar a evolução do seu plano aqui.</p>
+            <h1>Seguimiento</h1>
+            <p>Próximamente podrás seguir aquí la evolución de tu plan.</p>
           </header>
         </div>
       )
@@ -132,12 +132,12 @@ function AreaLogada({ usuario, onSair }: Props) {
     return (
       <div className="area-logada">
         <div className="cartao-logado">
-          <span className="etiqueta">Área da empresa</span>
+          <span className="etiqueta">Área de la empresa</span>
 
-          <h1>Bem-vindo(a) ao EcoSME, {usuario.nomeEmpresa}!</h1>
+          <h1>¡Bienvenido(a) a EcoSME {usuario.nomeEmpresa}!</h1>
 
           <p>
-            <strong>E-mail:</strong> {usuario.email}
+            <strong>Correo electrónico:</strong> {usuario.email}
           </p>
 
           {erro && (
@@ -147,15 +147,15 @@ function AreaLogada({ usuario, onSair }: Props) {
           )}
 
           {carregando ? (
-            <p>Verificando seu diagnóstico...</p>
+            <p>Verificando tu diagnóstico...</p>
           ) : ultimoResultado ? (
             <section className="ultimo-diagnostico">
-              <h2>Seu último diagnóstico</h2>
+              <h2>Tu último diagnóstico</h2>
               <p>
-                Pontuação: <strong>{ultimoResultado.pontuacao}/100</strong>
+                Puntaje: <strong>{ultimoResultado.pontuacao}/100</strong>
               </p>
               <p>
-                Nível:{' '}
+                Nivel:{' '}
                 <strong>{nivelPorPontuacao(ultimoResultado.pontuacao)}</strong>
               </p>
 
@@ -169,10 +169,10 @@ function AreaLogada({ usuario, onSair }: Props) {
             </section>
           ) : (
             <section className="ultimo-diagnostico">
-              <h2>Comece seu diagnóstico</h2>
+              <h2>Comienza tu diagnóstico</h2>
               <p>
-                Responda às perguntas para conhecer o nível de
-                sustentabilidade da sua empresa.
+                Responde las preguntas para conocer el nivel de
+                sostenibilidad de tu empresa.
               </p>
             </section>
           )}
@@ -183,7 +183,7 @@ function AreaLogada({ usuario, onSair }: Props) {
             onClick={iniciarDiagnostico}
             disabled={carregando}
           >
-            Iniciar novo diagnóstico
+            Iniciar nuevo diagnóstico
           </button>
         </div>
       </div>

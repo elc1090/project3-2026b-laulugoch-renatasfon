@@ -12,8 +12,8 @@ const ETAPAS: { tela: Tela; rotulo: string; exigeResultado: boolean }[] = [
   { tela: 'inicio', rotulo: 'Empresa', exigeResultado: false },
   { tela: 'diagnostico', rotulo: 'Diagnóstico', exigeResultado: false },
   { tela: 'resultado', rotulo: 'Resultado', exigeResultado: true },
-  { tela: 'plano', rotulo: 'Meu Plano', exigeResultado: true },
-  { tela: 'acompanhamento', rotulo: 'Acompanhamento', exigeResultado: true },
+  { tela: 'plano', rotulo: 'Mi Plan', exigeResultado: true },
+  { tela: 'acompanhamento', rotulo: 'Seguimiento', exigeResultado: true },
 ]
 
 type Props = {
@@ -45,7 +45,7 @@ function Layout({
           </span>
         </div>
 
-        <nav className="menu-lateral-nav" aria-label="Menu principal">
+        <nav className="menu-lateral-nav" aria-label="Menú principal">
           {ETAPAS.map((etapa) => {
             const desabilitada = etapa.exigeResultado && !temResultado
 
@@ -65,12 +65,12 @@ function Layout({
         </nav>
 
         <button type="button" className="menu-sair" onClick={onSair}>
-          Sair da conta
+          Cerrar sesión
         </button>
       </aside>
 
       <div className="layout-corpo">
-        <ol className="barra-etapas" aria-label="Seu percurso na plataforma">
+        <ol className="barra-etapas" aria-label="Tu recorrido en la plataforma">
           {ETAPAS.map((etapa, indice) => {
             const estado =
               indice < indiceAtual

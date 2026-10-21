@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
     const { respostas } = req.body ?? {};
 
     if (!Array.isArray(respostas)) {
-      res.status(400).json({ error: "Envie a lista de respostas" });
+      res.status(400).json({ error: "Envía la lista de respuestas" });
       return;
     }
 
@@ -56,7 +56,7 @@ router.post("/", async (req, res) => {
 
     if (respostas.length !== perguntas.length) {
       res.status(400).json({
-        error: `Responda todas as ${perguntas.length} perguntas`,
+        error: `Responde las ${perguntas.length} preguntas`,
       });
       return;
     }
@@ -72,13 +72,13 @@ router.post("/", async (req, res) => {
         !VALORES_VALIDOS.includes(valor)
       ) {
         res.status(400).json({
-          error: `Cada resposta precisa de perguntaId e valor ${VALORES_VALIDOS.join(", ")}`,
+          error: `Cada respuesta debe incluir perguntaId y un valor válido ${VALORES_VALIDOS.join(", ")}`,
         });
         return;
       }
 
       if (valores.has(perguntaId)) {
-        res.status(400).json({ error: "Há perguntas respondidas mais de uma vez" });
+        res.status(400).json({ error: "Hay preguntas respondidas más de una vez" });
         return;
       }
 
@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
     }
 
     if (perguntas.some((p) => !valores.has(p.id))) {
-      res.status(400).json({ error: "As respostas não correspondem às perguntas" });
+      res.status(400).json({ error: "Las respuestas no corresponden a las preguntas" });
       return;
     }
 
@@ -124,7 +124,7 @@ router.post("/", async (req, res) => {
     });
   } catch (error) {
     console.error("Erro ao criar diagnóstico:", error);
-    res.status(500).json({ error: "Não foi possível salvar o diagnóstico" });
+    res.status(500).json({ error: "No fue posible guardar el diagnóstico" });
   }
 });
 
@@ -145,7 +145,7 @@ router.get("/", async (_req, res) => {
     });
   } catch (error) {
     console.error("Erro ao listar diagnósticos:", error);
-    res.status(500).json({ error: "Não foi possível listar os diagnósticos" });
+    res.status(500).json({ error: "No fue posible listar los diagnósticos" });
   }
 });
 
@@ -159,14 +159,14 @@ router.get("/ultimo", async (_req, res) => {
     });
 
     if (!diagnostico) {
-      res.status(404).json({ error: "Nenhum diagnóstico realizado ainda" });
+      res.status(404).json({ error: "Aún no se ha realizado ningún diagnóstico" });
       return;
     }
 
     res.json(montarResultado(diagnostico));
   } catch (error) {
     console.error("Erro ao buscar o último diagnóstico:", error);
-    res.status(500).json({ error: "Não foi possível buscar o diagnóstico" });
+    res.status(500).json({ error: "No fue posible obtener el diagnóstico" });
   }
 });
 
@@ -186,14 +186,14 @@ router.get("/:id", async (req, res) => {
     });
 
     if (!diagnostico) {
-      res.status(404).json({ error: "Diagnóstico não encontrado" });
+      res.status(404).json({ error: "Diagnóstico no encontrado" });
       return;
     }
 
     res.json(montarResultado(diagnostico));
   } catch (error) {
     console.error("Erro ao buscar diagnóstico:", error);
-    res.status(500).json({ error: "Não foi possível buscar o diagnóstico" });
+    res.status(500).json({ error: "No fue posible obtener el diagnóstico" });
   }
 });
 

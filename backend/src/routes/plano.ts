@@ -17,7 +17,7 @@ router.get("/", requireAuth, async (_req, res) => {
 
     if (!diagnostico) {
       res.status(404).json({
-        error: "Faça o diagnóstico antes de ver o plano de ação",
+        error: "Realiza el diagnóstico antes de ver el plan de acción",
       });
       return;
     }
@@ -54,7 +54,7 @@ router.get("/", requireAuth, async (_req, res) => {
     });
   } catch (error) {
     console.error("Erro ao montar o plano de ação:", error);
-    res.status(500).json({ error: "Não foi possível montar o plano de ação" });
+    res.status(500).json({ error: "No fue posible armar el plan de acción" });
   }
 });
 
