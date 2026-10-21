@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import './App.css'
 import type { Usuario } from './types'
 import AreaLogada from './AreaLogada'
+import Logo from './components/logo'
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -127,7 +128,7 @@ function App() {
   return (
     <main className="pagina">
       <section className="apresentacao">
-        <span className="marca">Diagnóstico Empresarial</span>
+        <span className="marca"><Logo tamanho={40} /></span>
 
         <div className="apresentacao-conteudo">
           <span className="etiqueta">Sua empresa, em evolução</span>
