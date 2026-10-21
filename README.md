@@ -44,7 +44,7 @@ Também fui responsável pelo deploy inicial da aplicação, para disponibilizar
 
 1. Autorização pelo dono do dado
 
-O empresaId vem do token (colocado em res.locals.userId pelo middleware) e nunca do corpo da requisição. Se a empresa B pedir o diagnóstico da empresa A, a consulta não encontra nada e a resposta é 404, como se ele não existisse:
+O empresaId vem do token (colocado em res.locals.userId pelo middleware) e nunca do corpo da requisição. Se a empresa B pedir o diagnóstico da empresa A, a consulta não encontra nada e a resposta é 404, como se ele não existisse.
 
 ```ts
 const diagnostico = await prisma.diagnostico.findFirst({
@@ -60,7 +60,7 @@ if (!diagnostico) {
 
 2. Middleware de autenticação
 
-Barra qualquer requisição sem token válido antes de a rota executar. Esconder botões no React não protege nada, e é aqui que a proteção de fato acontece:
+Barra qualquer requisição sem token válido antes de a rota executar, pois somente esconder os botões no React não protege nada.
 
 ```ts
 const userId = verifyToken(header.slice(7));
@@ -74,15 +74,6 @@ res.locals.userId = userId;
 next();
 ```
 
-3. Migration que remove valores de um enum
-
-O PostgreSQL não remove valores de um enum, então o Prisma recria o tipo, e isso falha se ainda houver dados com os valores antigos. Acrescentei à mão, no topo do arquivo gerado, a limpeza dos dados do modelo antigo (a ordem respeita as chaves estrangeiras):
-
-```sql
-DELETE FROM "Resposta";
-DELETE FROM "Diagnostico";
-DELETE FROM "Pergunta";
-```
 
 ## Tecnologias
 
