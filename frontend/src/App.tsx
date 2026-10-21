@@ -128,7 +128,7 @@ function App() {
   return (
     <main className="pagina">
       <section className="apresentacao">
-        <span className="marca"><Logo tamanho={132} /></span>
+        <span className="marca"><Logo tamanho={125} /></span>
 
         <div className="apresentacao-conteudo">
           <span className="etiqueta">Sua empresa, em evolução</span>
