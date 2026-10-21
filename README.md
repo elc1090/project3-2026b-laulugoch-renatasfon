@@ -79,7 +79,6 @@ next();
 
 ### Linguagens e afins
 
-Substitua este texto por uma lista detalhada de tecnologias utilizadas:
 - React + TypeScript + Vite
 - Node.js + Express + TypeScript
 - PostgreSQL + Prisma
@@ -105,8 +104,6 @@ A autorização é realizada no backend. Um middleware verifica o token antes de
 - Medium             https://curity.medium.com/best-practices-for-storing-access-tokens-in-the-browser-6b3d515d9814
 - Documentação elaborada pelo grupo do Chile
 - Claude gratuito
-
-
 
 
 ---
