@@ -263,9 +263,9 @@
 .menu-lateral {
   width: 240px;
   flex-shrink: 0;
-  background: var(--cor-fundo);
+  background: #172d3d;
   border-right: 1px solid var(--cor-borda-fundo);
-  color: #172d3d;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   padding: 28px 18px;
