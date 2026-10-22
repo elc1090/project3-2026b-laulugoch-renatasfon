@@ -305,21 +305,22 @@
 .menu-lateral-nav button {
   border: none;
   background: transparent;
-  color: #154b20;
+  color: #c9d4dc;              
   text-align: left;
   padding: 12px 14px;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
-.menu-lateral-nav button:hover:not(:disabled) {
-  background: #f7e1e9;
+.menu-lateral-nav button:hover:not(:disabled):not(.ativo) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
 }
 
 .menu-lateral-nav button.ativo {
-  background: var(--cor-marca);
+  background: var(--cor-marca);   
   color: #ffffff;
   font-weight: 700;
 }
