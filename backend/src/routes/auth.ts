@@ -152,7 +152,7 @@ router.post("/login", async (req, res) => {
       where: { email: normalizedEmail },
     });
 
-    const passwordOk = empresa
+    const passwordOk = empresa?.passwordHash
       ? await bcrypt.compare(password, empresa.passwordHash)
       : false;
 
