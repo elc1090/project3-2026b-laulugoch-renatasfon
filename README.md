@@ -1,109 +1,70 @@
-# Projeto: Aplicação com cadastro e autenticação de usuários integrando frontend, backend e persistência
+# Projeto final
 
+> 1. Leia com atenção as instruções abaixo para editar este README em formato Markdown.
+> 2. Substitua todos os trechos de texto iniciados com "Substitua" por informações do seu projeto, conforme solicitado em cada trecho.
+> 3. Substitua a imagem animada por um GIF/WEBP mostrando o resultado do seu projeto (o arquivo pode ser armazenado no repositório ou em URL externa). 
+> 4. Remova todas as instruções de entrega.
+> 5. Renomeie esta arquivo para README.md e entregue-o dentro da pasta raiz do seu repositório de entrega. 
+> 6. Double-check: Certifique-se de que seu README.md não contenha instruções de entrega e seja visualizado corretamente ao abrir seu repositório!
+> Opcional: você pode alterar a formatação deste README, mas mantenha todas as informações solicitadas.
 
-<img width="1340" height="576" alt="ecosme" src="https://github.com/user-attachments/assets/5b77c08f-177f-4a3e-a603-6a20c31e11a2" />
+![Substitua a imagem ao lado por um GIF/WEBP animado mostrando seu projeto](./moho_follow_through2.gif "GIF animado do projeto. Imagem temporária de Moho Animation https://moho.lostmarble.com/products/moho-pro-special-halls-head-college")
 
 
 
 ## Acesso
 
-[Deploy](http://empresa-frontend.onrender.com)
+Substitua este texto pela URL para acesso ao seu app publicado. Adicione a URL também na seção "About" do seu repositório no GitHub.
 
 
-## Desenvolvedoras
-Lauren Auth Lugoch - Sistemas de Informação
+## Desenvolvedor(a) / Desenvolvedor(es/as)
+Substitua este texto pela identificação (nome e curso) de quem desenvolveu o trabalho (individual ou dupla)
 
-Renata de Souza de Fonseca - Sistemas de Informação
 
 
 ## Proposta
-Sistema de informações em colaboração com turma de Administração (Chile):
+Substitua este texto pela descrição da proposta que consta no documento compartilhado com a turma. Indique se é uma continuação de projeto anterior ou uma nova aplicação, explicando o contraste/avanço em relação aos projetos anteriores.
 
-A proposta é desenvolver o SOSTENPYME, uma plataforma web pensada para apoiar pequenas e médias empresas na identificação de oportunidades de melhoria relacionadas à sustentabilidade. Por meio de um diagnóstico, a empresa poderá compreender melhor sua situação em diferentes dimensões e, a partir dos resultados, definir ações de melhoria que poderão ser organizadas e acompanhadas pela própria plataforma.
 
 
 ## Desenvolvimento
 
 ### Processo
 
-Trabalhamos em dupla, dividindo as tarefas para desenvolver partes diferentes da aplicação e depois integrá-las, porém estudamos e idealizamos juntas a parte da autenticação dos usuários. Mantivemos contato com o grupo do Chile, onde eles nos mandavam os requisitos desejados e nós implementávamos. Também mandamos uma versão intermediária da aplicação, onde recebemos feedbacks e pedidos de algumas alterações na lógica principal das perguntas e cálculo do dignóstico. Quando a especificação mudou na etapa final, ajustamos o backend e as telas para atender ao novo escopo.
+Substitua este texto (toda a seção) por uma descrição do processo de desenvolvimento **em primeira pessoa, sem ajuda de IA**.
 
-Lauren: Decidimos utilizar Docker, por recomendação da professora, o que facilita o acesso ao banco sem precisar instalar nada na mão. Fiquei responsável pela criação do back e front iniciais, bem como a implementação inicial do banco e Prisma. Tive um pouco de dificuldade com o Prisma a principio, pois estava dando erro com a versão que eu havia instalado, mas logo consegui resolver o problema. 
+Para trabalhos em dupla, explicar primeiramente como a dupla se organizou para realizar o trabalho: se houve ou não uma divisão, quem fez o quê, etc.
 
-Eu não sabia como um login funciona por dentro, então fui procurando entender como cada parte funcionava. Aprendi que a senha nunca é guardada, mas que o banco guarda só uma versão embaralhada dela, que não dá para desfazer. Quando a pessoa entra, o servidor entrega o token, que o navegador mostra a cada pedido seguinte. Também entendi como funciona a proteção, e que o servidor confere o token antes de responder qualquer coisa privada. Para ter certeza de que funcionava eu testei de propósito alguns casos que deveriam dar errado, como pedir dados sem estar logada, usar um token inexistente, cadastrar o mesmo e-mail duas vezes e tentar ver o diagnóstico de outra empresa, e todos foram bloqueados.
-
-Com a estrutura do sistema funcionando, comecei a desenvolver a lógica do diagnóstico. Na primeira versão, trabalhei com a estrutura inicial do diagnóstico e com o cálculo das pontuações. Depois, precisei adaptar a implementação quando o grupo do Chile enviou a especificação definitiva. O número de perguntas mudou de 25 para 9, as dimensões passaram de cinco para três e a escala de respostas foi alterada para 0, 5 e 10 pontos. Para isso, precisei atualizar os dados armazenados, as regras de validação e as fórmulas que estavam sendo utilizadas para calcular os resultados.
-
-Depois do diagnóstico, implementei a lógica que transforma os pontos obtidos em um plano de ação. A ideia é verificar a pontuação em cada uma das dimensões e, quando ela estiver abaixo de 60, associar uma ação corretiva com descrição da atividade. Quando a pontuação atinge ou ultrapassa esse limite, foi decidido pelo grupo parceiro em apenas apresentar uma mensagem de reforço positivo para a empresa.
-
-Renata: Além de estudar e implementar junto com a Lauren a parte de autenticação e autorização, também conversamos sobre como criar e manter a lógica de pontuação do diagnóstico. Fiquei responsável principalmente pelo desenvolvimento do frontend, incluindo as telas de login e cadastro de empresas. Durante essa etapa, aprendi melhor como o token de autenticação é utilizado na aplicação. Após o login, o token recebido do backend fica armazenado no navegador por meio do sessionStorage. Quando a empresa tenta acessar uma funcionalidade protegida, como o diagnóstico, o frontend envia esse token junto com a requisição ao backend. O servidor, por sua vez, verifica se o token é válido e identifica a empresa que está fazendo a solicitação, permitindo ou negando o acesso conforme as permissões. Com isso, compreendi melhor como o frontend participa do processo de autenticação e como o token permite controlar o acesso às funcionalidades do sistema.
-
-Também fui responsável pelo deploy inicial da aplicação, para disponibilizar um protótipo ao grupo do Chile. Escolhemos utilizar o Render porque tanto eu quanto a Lauren já tínhamos familiaridade com a plataforma. Durante esse processo, descobri que o frontend, o backend e o banco de dados eram disponibilizados separadamente, algo que eu ainda não entendia. Por esse motivo, inicialmente tive dificuldades para carregar as perguntas do diagnóstico, pois a URL de conexão com o banco de dados não estava configurada corretamente no ambiente de produção. Para compreender o problema, utilizei a IA como apoio na tradução e interpretação das mensagens de erro, o que me ajudou a identificar a necessidade de corrigir a URL nas variáveis de ambiente do backend. Após esse ajuste, consegui estabelecer a conexão corretamente e permitir que o sistema acessasse e processasse as perguntas do diagnóstico
+Cada pessoa deve explicar e justificar suas escolhas, destacando o que já sabia ou não, como lidou com dúvidas ou dificuldades específicas, que adaptações foram necessárias, etc. Evitar comentários genéricos como "pedi ajuda para IA e resolvi", dando preferência para expor detalhes específicos de um problema e sua solução.
 
 ### Trechos de código
 
-1. Autorização pelo dono do dado
-
-O empresaId vem do token (colocado em res.locals.userId pelo middleware) e nunca do corpo da requisição. Se a empresa B pedir o diagnóstico da empresa A, a consulta não encontra nada e a resposta é 404, como se ele não existisse.
-
-```ts
-const diagnostico = await prisma.diagnostico.findFirst({
-  where: { id, empresaId: res.locals.userId },
-  include: { respostas: { include: { pergunta: true } } },
-});
-
-if (!diagnostico) {
-  res.status(404).json({ error: "Diagnóstico não encontrado" });
-  return;
-}
-```
-
-2. Middleware de autenticação
-
-Barra qualquer requisição sem token válido antes de a rota executar, pois somente esconder os botões no React não protege nada.
-
-```ts
-const userId = verifyToken(header.slice(7));
-
-if (userId === null) {
-  res.status(401).json({ error: "Token inválido ou expirado" });
-  return;
-}
-
-res.locals.userId = userId;
-next();
-```
+Substitua este texto por uma indicação de pelo menos 3 trechos de código que você(s) queira(m) destacar para a turma (por exemplo, para explicar algo que aprendeu, para alertar sobre alguma dificuldade de compreensão, para mostrar uma curiosidade, etc).
 
 
 ## Tecnologias
 
 ### Linguagens e afins
 
-- React + TypeScript + Vite
-- Node.js + Express + TypeScript
-- PostgreSQL + Prisma
-
-### Autenticação e autorização
-
-A aplicação utiliza autenticação baseada em tokens JWT, sem manter uma sessão tradicional no servidor.
-
-No cadastro, o backend valida os dados recebidos, gera um hash da senha com bcryptjs e armazena as informações da empresa no PostgreSQL. No login, compara a senha informada com o hash armazenado e, se as credenciais forem válidas, gera um token JWT.
-
-O frontend armazena o token na sessionStorage e o envia nas requisições protegidas por meio do cabeçalho Authorization: Bearer. Ao recarregar a página, consulta o backend para verificar a autenticação e recuperar os dados da empresa.
-
-A autorização é realizada no backend. Um middleware verifica o token antes de permitir o acesso às rotas protegidas, e as consultas aos diagnósticos consideram o identificador da empresa autenticada. Assim, uma empresa não pode acessar os diagnósticos de outra apenas alterando o identificador enviado na requisição.
+Substitua este texto por uma lista detalhada de tecnologias utilizadas:
+- ...
+- ...
+- 
 
 
 ### Ambiente de desenvolvimento
 
-- VS Code
-
+Substitua este trecho por uma lista detalhada dos ambientes/ferramentas de desenvolvimento usados (por exemplo, VS Code + alguma extensão, agentes de IA, etc.)
+- ...
+- ...
 
 ## Referências e créditos
 
-- Medium             https://curity.medium.com/best-practices-for-storing-access-tokens-in-the-browser-6b3d515d9814
-- Documentação elaborada pelo grupo do Chile
-- Claude gratuito
+Substitua este trecho por uma lista bem detalhada de todo material consultado para ajudar no projeto, por exemplo:  URLs de vídeos ou outro material consultado, créditos para colegas que colaboraram, geradores de código, etc.
+- ...
+- ...
+
+
 
 
 ---
