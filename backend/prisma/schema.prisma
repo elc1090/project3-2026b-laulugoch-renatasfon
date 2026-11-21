@@ -69,3 +69,14 @@ model Resposta {
 
   @@unique([diagnosticoId, perguntaId])
 }
+
+model CadastroGooglePendente {
+  id          Int      @id @default(autoincrement())
+  tokenHash   String   @unique
+  googleSub   String
+  email       String
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([expiresAt])
+}
