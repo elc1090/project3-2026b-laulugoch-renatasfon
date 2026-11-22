@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 
 // configurações da API
 const apiKey = process.env.GEMINI_API_KEY;
-const modelo = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+const modelo = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 // verifica se a chave foi configurada
 if (!apiKey) {

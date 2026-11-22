@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -31,6 +30,7 @@ model Empresa {
   numFuncionarios Int?
 
   diagnosticos    Diagnostico[]
+  feedbacks       Feedback[]
 }
 
 model Pergunta {
@@ -104,4 +104,16 @@ model GoogleAuthCode {
   createdAt DateTime  @default(now())
 
   @@index([expiresAt])
+}
+
+model Feedback {
+  id          Int      @id @default(autoincrement())
+  empresaId   Int
+  avaliacao   Int
+  comentario  String?
+  createdAt   DateTime @default(now())
+
+  empresa     Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+
+  @@index([empresaId])
 }

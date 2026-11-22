@@ -1,4 +1,3 @@
-
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
@@ -10,6 +9,7 @@ import perguntasRouter from "./routes/perguntas.js";
 import diagnosticosRouter from "./routes/diagnosticos.js";
 import planoRouter from "./routes/plano.js";
 import googleRouter from "./routes/google.js";
+import feedbackRouter from "./routes/feedback.js";
 
 const app = express();
 
@@ -22,6 +22,7 @@ app.use("/auth", googleRouter);
 app.use("/perguntas", perguntasRouter);
 app.use("/diagnosticos", diagnosticosRouter);
 app.use("/plano", planoRouter);
+app.use("/feedback", feedbackRouter);
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });

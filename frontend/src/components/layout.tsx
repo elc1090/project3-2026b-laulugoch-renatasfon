@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Logo from './logo'
+import CaixaSugestoes from './CaixaSugestoes'
 
 export type Tela =
   | 'inicio'
@@ -96,6 +97,8 @@ function Layout({
 
         <main className="layout-conteudo">{children}</main>
       </div>
+
+      <CaixaSugestoes />
     </div>
   )
 }

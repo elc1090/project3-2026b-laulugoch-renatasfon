@@ -1,0 +1,129 @@
+.caixa-sugestoes {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.caixa-sugestoes-botao {
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  background: #172d3d;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.caixa-sugestoes-botao:hover {
+  background: #28516a;
+}
+
+.caixa-sugestoes-painel {
+  position: absolute;
+  bottom: 72px;
+  right: 0;
+  width: 350px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: 24px;
+  background: white;
+  color: #202a36;
+  border: 1px solid #e1e5e9;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+.caixa-sugestoes-painel h2 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.caixa-sugestoes-painel p {
+  font-size: 14px;
+  color: #65717d;
+  margin-bottom: 20px;
+}
+
+.caixa-sugestoes-painel form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.caixa-sugestoes-estrelas {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.caixa-sugestoes-estrelas legend {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.caixa-sugestoes-avaliacao {
+  display: flex;
+  gap: 5px;
+}
+
+.caixa-sugestoes-avaliacao button {
+  border: none;
+  background: transparent;
+  color: #cbd0d5;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.caixa-sugestoes-avaliacao button.selecionada {
+  color: #f4b942;
+}
+
+.caixa-sugestoes-avaliacao button:hover {
+  color: #f4b942;
+}
+
+.caixa-sugestoes-painel label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.caixa-sugestoes-painel textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #d5dce2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.caixa-sugestoes-painel textarea:focus {
+  outline: 2px solid #86b8a7;
+  border-color: #86b8a7;
+}
+
+.caixa-sugestoes-painel .botao-principal {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .caixa-sugestoes {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .caixa-sugestoes-painel {
+    padding: 18px;
+  }
+}
