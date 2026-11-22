@@ -20,7 +20,6 @@ enum TamanhoEmpresa {
   MEDIA
 }
 
-
 model Empresa {
   id              Int            @id @default(autoincrement())
   nomeEmpresa     String
@@ -33,7 +32,6 @@ model Empresa {
 
   diagnosticos    Diagnostico[]
 }
-
 
 model Pergunta {
   id             String        @id
@@ -55,6 +53,9 @@ model Diagnostico {
   empresa        Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
   respostas      Resposta[]
 
+  // Plano de IA associado a este diagnostico
+  planoIA        PlanoIA?
+
   @@index([empresaId])
 }
 
@@ -69,6 +70,19 @@ model Resposta {
 
   @@unique([diagnosticoId, perguntaId])
 }
+
+// Armazena os planos personalizados gerados pelo Gemini
+
+model PlanoIA {
+  id             Int         @id @default(autoincrement())
+  diagnosticoId  Int         @unique
+  recomendacoes  Json
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  diagnostico    Diagnostico @relation(fields: [diagnosticoId], references: [id], onDelete: Cascade)
+}
+
 
 model CadastroGooglePendente {
   id          Int      @id @default(autoincrement())

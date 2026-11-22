@@ -637,3 +637,15 @@
     flex-direction: column;
   }
 }
+/* Recomendações geradas com IA */
+.plano-ia-controles, .plano-ia-resultados { display: flex; flex-direction: column; gap: 14px; }
+.plano-ia-resultados { margin: 10px 0 22px; }
+.plano-ia-resultados > h2 { margin-bottom: 0; font-size: 20px; }
+.plano-ia-resultados > p { color: #64717d; }
+.plano-ia-cartao { border-left: 4px solid #246b59; }
+.plano-ia-cartao h3 { font-size: 18px; margin: 12px 0; }
+.plano-ia-cartao h4 { font-size: 14px; margin: 16px 0 6px; }
+.plano-ia-cartao p { margin: 8px 0; }
+.plano-ia-cartao ol { padding-left: 22px; line-height: 1.7; color: #4a5864; }
+.plano-ia-prioridade { font-size: 12px; font-weight: 700; color: #246b59; }
+@media (max-width: 600px) { .plano-ia-cartao .plano-tarefa-topo { align-items: flex-start; gap: 8px; flex-direction: column; } }

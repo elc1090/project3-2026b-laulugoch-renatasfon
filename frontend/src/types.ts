@@ -56,3 +56,18 @@ export type Plano = {
   createdAt: string
   dimensoes: ItemPlano[]
 }
+export type RecomendacaoIA = {
+  dimensao: Dimensao
+  titulo: string
+  justificativa: string
+  prioridade: 'Alta' | 'Media' | 'Baja'
+  prazo: string
+  passos: string[]
+  indicador: string
+  ods: number[]
+}
+
+export type RespostaPlanoIA = {
+  diagnosticoId: number
+  plano: { recomendacoes: RecomendacaoIA[] }
+}

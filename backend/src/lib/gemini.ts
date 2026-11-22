@@ -44,7 +44,20 @@ export type DadosPlanoIA = {
   };
 };
 
-export async function gerarPlanoIA(dados: DadosPlanoIA): Promise<string> {
+export type RecomendacaoIA = {
+  dimensao: "AMBIENTAL" | "SOCIAL" | "ECONOMICA";
+  titulo: string;
+  justificativa: string;
+  prioridade: "Alta" | "Media" | "Baja";
+  prazo: string;
+  passos: string[];
+  indicador: string;
+  ods: number[];
+};
+
+export type PlanoIA = { recomendacoes: RecomendacaoIA[] };
+
+export async function gerarPlanoIA(dados: DadosPlanoIA): Promise<PlanoIA> {
   const prompt = `
 Eres un consultor especializado en sostenibilidad para pequeñas y medianas empresas.
 
@@ -81,17 +94,41 @@ INSTRUCCIONES:
 9. No modifiques ni recalcules las puntuaciones del diagnóstico.
 10. No afirmes que una práctica existe si las respuestas no lo demuestran.
 
-Genera el plan de acción de forma clara, organizada y fácil de comprender.
+Devuelve exclusivamente un objeto JSON con la clave "recomendacoes", que contiene una lista de 3 a 5 objetos.
+Cada objeto debe tener: dimensao (AMBIENTAL, SOCIAL o ECONOMICA), titulo, justificativa,
+prioridade (Alta, Media o Baja), prazo, passos (exactamente 3 strings), indicador, ods (array de números entre 1 y 17).
+No incluyas Markdown ni texto adicional.
 `;
 
   const resposta = await ai.models.generateContent({
     model: modelo,
     contents: prompt,
+    config: { responseMimeType: "application/json" },
   });
 
   if (!resposta.text?.trim()) {
     throw new Error("Gemini no devolvió un plan de acción.");
   }
 
-  return resposta.text;
+  let plano: unknown;
+  try {
+    plano = JSON.parse(resposta.text);
+  } catch {
+    throw new Error("Gemini devolvió JSON inválido.");
+  }
+  if (!plano || typeof plano !== "object" || !("recomendacoes" in plano) ||
+      !Array.isArray(plano.recomendacoes) || plano.recomendacoes.length < 3 || plano.recomendacoes.length > 5) {
+    throw new Error("El plan generado tiene una estructura inválida.");
+  }
+  const dimensoes = ["AMBIENTAL", "SOCIAL", "ECONOMICA"];
+  for (const r of plano.recomendacoes) {
+    if (!r || !dimensoes.includes(r.dimensao) ||
+      !["Alta", "Media", "Baja"].includes(r.prioridade) ||
+      ![r.titulo, r.justificativa, r.prazo, r.indicador].every((v) => typeof v === "string" && v.trim()) ||
+      !Array.isArray(r.passos) || r.passos.length !== 3 || !r.passos.every((v: unknown) => typeof v === "string" && v.trim()) ||
+      !Array.isArray(r.ods) || !r.ods.every((v: unknown) => Number.isInteger(v) && (v as number) >= 1 && (v as number) <= 17)) {
+      throw new Error("Las recomendaciones generadas son inválidas.");
+    }
+  }
+  return plano as PlanoIA;
 }

@@ -1,3 +1,4 @@
+
 import { Router } from "express";
 import { prisma } from "../lib/prisma.js";
 import { requireAuth } from "../middleware/auth.js";
@@ -7,13 +8,17 @@ import { testarGemini, gerarPlanoIA } from "../lib/gemini.js";
 
 const router = Router();
 
-// calculado a partir do último diagnóstico
+// PLANO TRADICIONAL
 router.get("/", requireAuth, async (_req, res) => {
   try {
     const diagnostico = await prisma.diagnostico.findFirst({
       where: { empresaId: res.locals.userId },
       orderBy: { id: "desc" },
-      include: { respostas: { include: { pergunta: true } } },
+      include: {
+        respostas: {
+          include: { pergunta: true },
+        },
+      },
     });
 
     if (!diagnostico) {
@@ -27,26 +32,28 @@ router.get("/", requireAuth, async (_req, res) => {
       diagnostico.respostas.map((r) => ({
         valor: r.valor,
         dimensao: r.pergunta.dimensao,
-      })),
+      }))
     );
 
-    const dimensoes = resultado.dimensoes.map(({ dimensao, pontuacao }) => {
-      if (pontuacao < LIMITE_PLANO) {
+    const dimensoes = resultado.dimensoes.map(
+      ({ dimensao, pontuacao }) => {
+        if (pontuacao < LIMITE_PLANO) {
+          return {
+            dimensao,
+            pontuacao,
+            situacao: "ACAO" as const,
+            acao: CATALOGO[dimensao],
+          };
+        }
+
         return {
           dimensao,
           pontuacao,
-          situacao: "ACAO" as const,
-          acao: CATALOGO[dimensao],
+          situacao: "REFORCO" as const,
+          reforco: REFORCO,
         };
       }
-
-      return {
-        dimensao,
-        pontuacao,
-        situacao: "REFORCO" as const,
-        reforco: REFORCO,
-      };
-    });
+    );
 
     res.json({
       diagnosticoId: diagnostico.id,
@@ -54,12 +61,15 @@ router.get("/", requireAuth, async (_req, res) => {
       dimensoes,
     });
   } catch (error) {
-    console.error("Erro ao montar o plano de ação:", error);
-    res.status(500).json({ error: "No fue posible armar el plan de acción" });
+    console.error("Erro ao montar o plano:", error);
+
+    res.status(500).json({
+      error: "No fue posible armar el plan de acción",
+    });
   }
 });
 
-// Rota temporária para testar a conexão com o Gemini
+// TESTE DE CONEXÃO COM GEMINI
 router.get("/teste-ia", requireAuth, async (_req, res) => {
   try {
     const resposta = await testarGemini();
@@ -77,11 +87,99 @@ router.get("/teste-ia", requireAuth, async (_req, res) => {
   }
 });
 
+// CONSULTAR PLANO DE IA DO ÚLTIMO DIAGNÓSTICO
+router.get("/ia", requireAuth, async (_req, res) => {
+  try {
+    const diagnostico = await prisma.diagnostico.findFirst({
+      where: { empresaId: res.locals.userId },
+      orderBy: { id: "desc" },
+      select: {
+        id: true,
+        planoIA: true,
+      },
+    });
 
-// gera plano de ação personalizado com ia a partir do ultimo diagnostico
+    if (!diagnostico) {
+      res.status(404).json({
+        error: "Realiza el diagnóstico antes de consultar tu plan",
+      });
+      return;
+    }
+
+    if (!diagnostico.planoIA) {
+      res.status(404).json({
+        error: "Todavía no tienes un plan generado con IA",
+      });
+      return;
+    }
+
+    res.json({
+      diagnosticoId: diagnostico.id,
+      planoId: diagnostico.planoIA.id,
+      plano: {
+        recomendacoes: diagnostico.planoIA.recomendacoes,
+      },
+      createdAt: diagnostico.planoIA.createdAt,
+      updatedAt: diagnostico.planoIA.updatedAt,
+    });
+  } catch (error) {
+    console.error("Erro ao consultar plano IA:", error);
+
+    res.status(500).json({
+      error: "No fue posible consultar el plan con IA",
+    });
+  }
+});
+
+// HISTÓRICO DE PLANOS GERADOS
+router.get("/ia/historico", requireAuth, async (_req, res) => {
+  try {
+    const planos = await prisma.planoIA.findMany({
+      where: {
+        diagnostico: {
+          empresaId: res.locals.userId,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        diagnosticoId: true,
+        recomendacoes: true,
+        createdAt: true,
+        updatedAt: true,
+        diagnostico: {
+          select: {
+            createdAt: true,
+            pontuacao: true,
+          },
+        },
+      },
+    });
+
+    res.json({
+      planos: planos.map((plano) => ({
+        id: plano.id,
+        diagnosticoId: plano.diagnosticoId,
+        recomendacoes: plano.recomendacoes,
+        createdAt: plano.createdAt,
+        updatedAt: plano.updatedAt,
+        diagnostico: plano.diagnostico,
+      })),
+    });
+  } catch (error) {
+    console.error("Erro ao consultar histórico:", error);
+
+    res.status(500).json({
+      error: "No fue posible consultar el historial de planes",
+    });
+  }
+});
+
+// GERAR OU REGENERAR PLANO COM IA
 router.post("/ia", requireAuth, async (_req, res) => {
   try {
-    // busca a empresa que ta fazendo a solicitação
     const empresa = await prisma.empresa.findUnique({
       where: { id: res.locals.userId },
       select: {
@@ -98,15 +196,12 @@ router.post("/ia", requireAuth, async (_req, res) => {
       return;
     }
 
-    // busca o diagnóstico mais recente da empresa
     const diagnostico = await prisma.diagnostico.findFirst({
       where: { empresaId: res.locals.userId },
       orderBy: { id: "desc" },
       include: {
         respostas: {
-          include: {
-            pergunta: true,
-          },
+          include: { pergunta: true },
         },
       },
     });
@@ -118,15 +213,32 @@ router.post("/ia", requireAuth, async (_req, res) => {
       return;
     }
 
-    // calcula os resultados com as regras já existentes
+
+    const planoExistente = await prisma.planoIA.findUnique({
+  where: {
+    diagnosticoId: diagnostico.id,
+  },
+    });
+
+    if (planoExistente) {
+      return res.json({
+        diagnosticoId: diagnostico.id,
+        planoId: planoExistente.id,
+        plano: {
+           recomendacoes: planoExistente.recomendacoes,
+        },
+        createdAt: planoExistente.createdAt,
+        updatedAt: planoExistente.updatedAt,
+      });
+    }
+
     const resultado = calcularResultado(
       diagnostico.respostas.map((r) => ({
         valor: r.valor,
         dimensao: r.pergunta.dimensao,
-      })),
+      }))
     );
 
-    // organiza os dados que vao ser enviados ao gemini
     const dados = {
       empresa: {
         nomeEmpresa: empresa.nomeEmpresa,
@@ -145,19 +257,38 @@ router.post("/ia", requireAuth, async (_req, res) => {
       },
     };
 
-    // solicita ao gemini um plano personalizado
+    // Gera recomendações usando Gemini
     const planoGerado = await gerarPlanoIA(dados);
 
-    // 6. Devolve o resultado ao frontend
+    // Salva no PostgreSQL.
+    // Se já existir, atualiza o plano do diagnóstico.
+    const planoSalvo = await prisma.planoIA.upsert({
+      where: {
+        diagnosticoId: diagnostico.id,
+      },
+      create: {
+        diagnosticoId: diagnostico.id,
+        recomendacoes: planoGerado.recomendacoes,
+      },
+      update: {
+        recomendacoes: planoGerado.recomendacoes,
+      },
+    });
+
     res.json({
       diagnosticoId: diagnostico.id,
-      plano: planoGerado,
+      planoId: planoSalvo.id,
+      plano: {
+        recomendacoes: planoSalvo.recomendacoes,
+      },
+      createdAt: planoSalvo.createdAt,
+      updatedAt: planoSalvo.updatedAt,
     });
   } catch (error) {
-    console.error("Erro ao gerar plano com IA:", error);
+    console.error("Erro ao gerar e salvar plano IA:", error);
 
     res.status(500).json({
-      error: "No fue posible generar el plan de acción con IA",
+      error: "No fue posible generar y guardar el plan con IA",
     });
   }
 });
