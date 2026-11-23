@@ -31,6 +31,7 @@ model Empresa {
 
   diagnosticos    Diagnostico[]
   feedbacks       Feedback[]
+  progressoAcademia ProgressoAcademia?
 }
 
 model Pergunta {
@@ -71,8 +72,6 @@ model Resposta {
   @@unique([diagnosticoId, perguntaId])
 }
 
-// Armazena os planos personalizados gerados pelo Gemini
-
 model PlanoIA {
   id             Int         @id @default(autoincrement())
   diagnosticoId  Int         @unique
@@ -82,7 +81,6 @@ model PlanoIA {
 
   diagnostico    Diagnostico @relation(fields: [diagnosticoId], references: [id], onDelete: Cascade)
 }
-
 
 model CadastroGooglePendente {
   id          Int      @id @default(autoincrement())
@@ -116,4 +114,13 @@ model Feedback {
   empresa     Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 
   @@index([empresaId])
+}
+
+model ProgressoAcademia {
+  id             Int      @id @default(autoincrement())
+  empresaId      Int      @unique
+  melhorPontuacao Int
+  concluidoEm    DateTime @default(now())
+
+  empresa        Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
 }

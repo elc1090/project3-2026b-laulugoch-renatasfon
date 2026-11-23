@@ -10,6 +10,7 @@ import diagnosticosRouter from "./routes/diagnosticos.js";
 import planoRouter from "./routes/plano.js";
 import googleRouter from "./routes/google.js";
 import feedbackRouter from "./routes/feedback.js";
+import academiaRouter from "./routes/academia.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use("/perguntas", perguntasRouter);
 app.use("/diagnosticos", diagnosticosRouter);
 app.use("/plano", planoRouter);
 app.use("/feedback", feedbackRouter);
+app.use("/academia", academiaRouter);
 
 app.get("/health", (_req, res) => {
   res.json({ status: "ok" });

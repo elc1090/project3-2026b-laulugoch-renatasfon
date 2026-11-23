@@ -8,6 +8,8 @@ export type Tela =
   | 'resultado'
   | 'plano'
   | 'acompanhamento'
+  | 'academia'
+  | 'radar'
 
 const ETAPAS: { tela: Tela; rotulo: string; exigeResultado: boolean }[] = [
   { tela: 'inicio', rotulo: 'Mi Empresa', exigeResultado: false },
@@ -15,6 +17,8 @@ const ETAPAS: { tela: Tela; rotulo: string; exigeResultado: boolean }[] = [
   { tela: 'resultado', rotulo: 'Resultado', exigeResultado: true },
   { tela: 'plano', rotulo: 'Mi Plan', exigeResultado: true },
   { tela: 'acompanhamento', rotulo: 'Seguimiento', exigeResultado: true },
+  { tela: 'academia', rotulo: 'Academia ODS', exigeResultado: false },
+  { tela: 'radar', rotulo: 'Radar de Oportunidades', exigeResultado: false },
 ]
 
 type Props = {

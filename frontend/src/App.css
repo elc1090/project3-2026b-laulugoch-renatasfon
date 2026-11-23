@@ -316,3 +316,67 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+/* inssígnias da aba mi empresa */
+
+.empresa-conquistas {
+  margin-top: 28px;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #dce4ea;
+  border-radius: 14px;
+}
+
+.empresa-conquistas h2 {
+  margin: 0 0 18px;
+  color: #172d3d;
+  font-size: 21px;
+}
+
+.empresa-conquistas > p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.empresa-insignia {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+  background: #f1f8f5;
+  border: 1px solid #b7e3d3;
+  border-radius: 12px;
+}
+
+.empresa-insignia-icone {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.empresa-insignia h3 {
+  margin: 0 0 8px;
+  color: #216a53;
+  font-size: 19px;
+}
+
+.empresa-insignia p {
+  margin: 5px 0;
+  color: #475569;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .empresa-conquistas {
+    padding: 20px;
+  }
+
+  .empresa-insignia {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .empresa-insignia-icone {
+    font-size: 38px;
+  }
+}
