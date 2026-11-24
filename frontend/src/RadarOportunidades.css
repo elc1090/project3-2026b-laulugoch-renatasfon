@@ -1,0 +1,144 @@
+.radar-oportunidades {
+  width: 100%;
+  padding-bottom: 24px;
+}
+
+.radar-cabecalho {
+  margin-bottom: 32px;
+}
+
+.radar-cabecalho h1 {
+  font-size: 28px;
+  color: #1f2937;
+  margin: 0 0 10px;
+}
+
+.radar-cabecalho p {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.radar-categoria {
+  margin-bottom: 32px;
+}
+
+.radar-categoria h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 19px;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.radar-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 280px), 1fr)
+  );
+  gap: 20px;
+}
+
+.radar-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.radar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.radar-etiqueta {
+  background-color: #e8f5ec;
+  color: #237a43;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.radar-card h3 {
+  font-size: 19px;
+  color: #1f2937;
+  margin: 0 0 6px;
+}
+
+.radar-subtitulo {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.radar-card p {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 14px 0;
+}
+
+.radar-orientacao {
+  color: #64748b;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.radar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #237a43;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-top: auto;
+  transition: background-color 0.2s;
+}
+
+.radar-link:hover {
+  background-color: #195c32;
+  color: #ffffff;
+}
+
+.radar-link:focus-visible {
+  outline: 2px solid #237a43;
+  outline-offset: 4px;
+}
+
+.radar-aviso {
+  padding: 16px 20px;
+  background-color: #f1f5f9;
+  border-left: 4px solid #237a43;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .radar-cabecalho h1 {
+    font-size: 24px;
+  }
+
+  .radar-card {
+    padding: 18px;
+  }
+
+  .radar-grid {
+    grid-template-columns: 1fr;
+  }
+}

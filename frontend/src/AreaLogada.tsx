@@ -8,6 +8,7 @@ import MeuPlano from './components/MeuPlano'
 import ResultadoDiagnostico from './components/ResultadoDiagnostico'
 import TarjetaEmpresa from './components/TarjetaEmpresa'
 import AcademiaODS from './components/AcademiaODS'
+import RadarOportunidades from './RadarOportunidades'
 
 type Props = {
   usuario: Usuario
@@ -119,34 +120,12 @@ function AreaLogada({ usuario, onSair }: Props) {
       )
     }
 
-    if (tela === 'acompanhamento') {
-      return (
-        <div className="diagnostico-container">
-          <header className="resultado-cabecalho">
-            <p>EcoSME</p>
-            <h1>Seguimiento</h1>
-            <p>Próximamente podrás seguir aquí la evolución de tu plan.</p>
-          </header>
-        </div>
-      )
-    }
-
     if (tela === 'academia') {
       return <AcademiaODS />
     }
 
     if (tela === 'radar') {
-      return (
-        <div className="diagnostico-container">
-          <header className="resultado-cabecalho">
-            <p>EcoSME</p>
-            <h1>Radar de Oportunidades</h1>
-            <p>
-              Próximamente encontrarás oportunidades y recursos para tu empresa.
-            </p>
-          </header>
-        </div>
-      )
+      return <RadarOportunidades />
     }
 
     return (
