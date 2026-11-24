@@ -1,0 +1,439 @@
+/* Estrutura da página */
+
+.pagina {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 46% 54%;
+  background: #f5f7f6;
+  color: var(--cor-texto);
+}
+
+/* Painel de apresentação */
+
+.pagina .apresentacao {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 32px;
+  padding: 40px 9% 260px;
+  border: none;
+  background: linear-gradient(
+    145deg,
+    #063f35,
+    #032e28
+  );
+  color: #ffffff;
+}
+
+/* Imagem decorativa */
+
+.pagina .apresentacao::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  bottom: -60px;
+  left: -10%;
+  width: 115%;
+  height: 310px;
+  background-image: url('./assets/natureza-ecosme.jpg');
+  background-position: center;
+  background-size: cover;
+  border-top: 14px solid #96cf9d;
+  border-radius: 0 100% 0 0;
+  pointer-events: none;
+}
+
+.pagina .apresentacao::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: -95px;
+  width: 150px;
+  height: 65%;
+  border-radius: 50%;
+  background: #a3d9ad;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Logo */
+
+.pagina .marca {
+  display: flex;
+  align-items: center;
+}
+
+.pagina .marca img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Texto de apresentação */
+
+.pagina .apresentacao-conteudo {
+  max-width: 520px;
+}
+
+.pagina .apresentacao-conteudo::before {
+  content: '';
+  display: block;
+  width: 55px;
+  height: 4px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  background: #86cb92;
+}
+
+.pagina .apresentacao .etiqueta {
+  color: #c6e9ce;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.pagina .apresentacao h1 {
+  color: #ffffff;
+  font-size: clamp(32px, 3.5vw, 52px);
+  line-height: 1.14;
+  letter-spacing: -1.5px;
+  margin: 0 0 24px;
+}
+
+.pagina .apresentacao-conteudo p {
+  color: #e0eee6;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.pagina .rodape-apresentacao {
+  display: none;
+}
+
+/* Área do formulário */
+
+.pagina .area-formulario {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 36px 8%;
+  background: #f5f7f6;
+}
+
+.pagina .area-formulario::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -180px;
+  bottom: -180px;
+  width: 430px;
+  height: 430px;
+  border-radius: 50%;
+  background: #dcefe0;
+  pointer-events: none;
+}
+
+.pagina .area-formulario::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -130px;
+  bottom: -220px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: #bfe5c8;
+  pointer-events: none;
+}
+
+/* Cartão de login e cadastro */
+
+.pagina .cartao {
+  width: 100%;
+  max-width: 560px;
+  padding: 32px 38px;
+  background: #ffffff;
+  border: 1px solid #e5ebe7;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(6, 63, 53, 0.08);
+}
+
+/* Alternador login e cadastro */
+
+.pagina .alternador {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 5px;
+  margin-bottom: 32px;
+  background: #e7f4e9;
+  border-radius: 12px;
+}
+
+.pagina .alternador button {
+  border: none;
+  border-radius: 9px;
+  padding: 13px 8px;
+  background: transparent;
+  color: #005432;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pagina .alternador button.ativo {
+  background: #005432;
+  color: #ffffff;
+  box-shadow: 0 3px 8px #00543220;
+}
+
+.pagina .alternador button:hover:not(.ativo) {
+  background: #d5ebda;
+}
+
+/* Títulos */
+
+.pagina .titulo-formulario {
+  margin-bottom: 26px;
+}
+
+.pagina .titulo-formulario h2 {
+  color: #172d3d;
+  font-size: clamp(25px, 2.4vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin: 0;
+}
+
+.pagina .titulo-formulario h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 4px;
+  border-radius: 5px;
+  background: #168443;
+  margin: 16px 0;
+}
+
+.pagina .titulo-formulario p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Campos */
+
+.pagina .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.pagina .campo label {
+  color: #172d3d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pagina .campo input,
+.pagina .campo select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 15px;
+  border: 1px solid #d5dfd9;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #172d3d;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pagina .campo input::placeholder {
+  color: #94a3b8;
+}
+
+.pagina .campo input:focus,
+.pagina .campo select:focus {
+  outline: none;
+  border-color: #168443;
+  box-shadow: 0 0 0 3px #16844318;
+}
+
+.pagina .campo input:read-only {
+  background: #f0f4f1;
+  color: #64748b;
+}
+
+/* Botão principal */
+
+.pagina .botao-principal {
+  width: 100%;
+  min-height: 50px;
+  padding: 14px 18px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #005432;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pagina .botao-principal:hover {
+  background: #003f29;
+}
+
+.pagina .botao-principal:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* Separador Google */
+
+.pagina .separador-google {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.pagina .separador-google::before,
+.pagina .separador-google::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #dce5e0;
+}
+
+/* Login Google */
+
+.pagina .botao-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #a8bdb0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #172d3d;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pagina .botao-google:hover {
+  background: #f0f7f2;
+}
+
+.pagina .botao-google:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Link para alternar formulário */
+
+.pagina .alternativa {
+  margin: 24px 0 0;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.pagina .alternativa button {
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: #005432;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pagina .alternativa button:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+
+@media (max-width: 1100px) {
+  .pagina .apresentacao {
+    padding: 32px 7% 240px;
+  }
+
+  .pagina .area-formulario {
+    padding: 28px 5%;
+  }
+
+  .pagina .cartao {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 860px) {
+  .pagina {
+    grid-template-columns: 1fr;
+  }
+
+  .pagina .apresentacao {
+    padding: 28px 30px 45px;
+    gap: 20px;
+  }
+
+  .pagina .apresentacao::before,
+  .pagina .apresentacao::after {
+    display: none;
+  }
+
+  .pagina .apresentacao h1 {
+    font-size: 32px;
+  }
+
+  .pagina .marca img {
+    max-height: 85px;
+  }
+
+  .pagina .area-formulario {
+    padding: 28px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagina .cartao {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .pagina .apresentacao {
+    padding: 24px;
+  }
+
+  .pagina .apresentacao h1 {
+    font-size: 28px;
+  }
+
+  .pagina .apresentacao-conteudo p {
+    font-size: 14px;
+  }
+
+  .pagina .alternador button {
+    font-size: 13px;
+  }
+}

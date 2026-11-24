@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from 'react'
 import { apiFetch, ApiError, mensagemDeErro } from './api'
 import { nivelPorPontuacao } from './dimensoes'
@@ -9,6 +10,8 @@ import ResultadoDiagnostico from './components/ResultadoDiagnostico'
 import TarjetaEmpresa from './components/TarjetaEmpresa'
 import AcademiaODS from './components/AcademiaODS'
 import RadarOportunidades from './RadarOportunidades'
+import IconeMenu from './components/IconeMenu'
+import './MiEmpresa.css'
 
 type Props = {
   usuario: Usuario
@@ -132,8 +135,17 @@ function AreaLogada({ usuario, onSair }: Props) {
       <div className="inicio-grid">
         <TarjetaEmpresa usuario={usuario} />
 
-        <div className="cartao-logado">
-          <span className="etiqueta">Diagnóstico</span>
+        <section className="cartao-logado">
+          <header className="inicio-card-cabecalho">
+            <span className="inicio-card-icone">
+              <IconeMenu nome="diagnostico" tamanho={25} />
+            </span>
+
+            <div>
+              <h2>Diagnóstico</h2>
+              <p>Conoce el estado de tu empresa</p>
+            </div>
+          </header>
 
           {erro && (
             <p className="mensagem mensagem-erro" role="alert">
@@ -145,30 +157,49 @@ function AreaLogada({ usuario, onSair }: Props) {
             <p>Verificando tu diagnóstico...</p>
           ) : ultimoResultado ? (
             <section className="ultimo-diagnostico">
-              <h2>Tu último diagnóstico</h2>
-              <p>
-                Puntaje: <strong>{ultimoResultado.pontuacao}/100</strong>
-              </p>
-              <p>
-                Nivel:{' '}
-                <strong>{nivelPorPontuacao(ultimoResultado.pontuacao)}</strong>
-              </p>
+              <h3>Tu último diagnóstico</h3>
+
+              <div className="inicio-diagnostico-pontuacao">
+                <span>Puntaje obtenido</span>
+
+                <div className="inicio-pontuacao-valor">
+                  <strong>{ultimoResultado.pontuacao}</strong>
+                  <span>/100</span>
+                </div>
+
+                <div className="inicio-diagnostico-nivel">
+                  <span>Nivel:</span>
+
+                  <strong>
+                    {nivelPorPontuacao(ultimoResultado.pontuacao)}
+                  </strong>
+                </div>
+              </div>
 
               <button
                 type="button"
-                className="botao-principal"
+                className="inicio-botao-secundario"
                 onClick={() => irPara('resultado')}
               >
                 Ver resultado completo
+                <span aria-hidden="true">→</span>
               </button>
             </section>
           ) : (
             <section className="ultimo-diagnostico">
-              <h2>Comienza tu diagnóstico</h2>
-              <p>
-                Responde las preguntas para conocer el nivel de sostenibilidad
-                de tu empresa.
-              </p>
+              <div className="inicio-sem-diagnostico">
+                <IconeMenu
+                  nome="diagnostico"
+                  tamanho={48}
+                />
+
+                <h3>Comienza tu diagnóstico</h3>
+
+                <p>
+                  Responde las preguntas para conocer
+                  el nivel de sostenibilidad de tu empresa.
+                </p>
+              </div>
             </section>
           )}
 
@@ -178,9 +209,10 @@ function AreaLogada({ usuario, onSair }: Props) {
             onClick={iniciarDiagnostico}
             disabled={carregando}
           >
+            <IconeMenu nome="diagnostico" tamanho={19} />
             Iniciar nuevo diagnóstico
           </button>
-        </div>
+        </section>
       </div>
     )
   }

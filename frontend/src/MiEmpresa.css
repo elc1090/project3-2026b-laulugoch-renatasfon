@@ -1,0 +1,440 @@
+/* Banner de boas-vindas */
+
+.inicio-boas-vindas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 220px;
+  padding: 32px;
+  border-radius: 18px;
+  background: linear-gradient(
+    110deg,
+    #063f35,
+    #005432
+  );
+  color: #ffffff;
+}
+
+.inicio-boas-vindas::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 48%;
+  height: 100%;
+  background-image: url('./assets/natureza-ecosme.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 45% 0 0 45%;
+}
+
+.inicio-boas-vindas::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #005432,
+    transparent 75%
+  );
+}
+
+.inicio-boas-vindas-texto {
+  width: 58%;
+  max-width: 650px;
+}
+
+.inicio-boas-vindas-etiqueta {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #bde5c6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.inicio-boas-vindas h2 {
+  margin: 0 0 16px;
+  font-size: clamp(25px, 2.5vw, 36px);
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: -0.6px;
+}
+
+.inicio-boas-vindas p {
+  margin: 8px 0;
+  color: #e0eee6;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Organização dos cartões */
+
+.layout .inicio-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: stretch;
+  gap: 22px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.inicio-grid .tarjeta-empresa,
+.inicio-grid .cartao-logado {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+}
+
+/* Cabeçalhos dos cartões */
+
+.inicio-card-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5ebe7;
+}
+
+.inicio-card-icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #e7f4e9;
+  color: #087d39;
+}
+
+.inicio-card-cabecalho h2 {
+  margin: 0 0 4px;
+  color: var(--cor-texto);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.inicio-card-cabecalho p {
+  margin: 0;
+  color: var(--cor-texto-secundario);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Informações da empresa */
+
+.inicio-grid .empresa-datos {
+  display: grid;
+  gap: 0;
+  margin: 0 0 24px;
+}
+
+.inicio-grid .empresa-datos div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf1ee;
+  font-size: 14px;
+}
+
+.inicio-grid .empresa-datos dt {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.inicio-grid .empresa-datos dd {
+  margin: 0;
+  color: #172d3d;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* Insígnias sustentáveis */
+
+.inicio-grid .empresa-conquistas {
+  margin-top: auto;
+  padding-top: 6px;
+  border: none;
+}
+
+.inicio-grid .empresa-conquistas h2 {
+  margin: 0 0 16px;
+  color: #172d3d;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.inicio-grid .empresa-insignia {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  background: #f0f8f2;
+  border: 1px solid #cde5d3;
+  border-radius: 12px;
+}
+
+.inicio-grid .empresa-insignia-icone {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 80px;
+  background: transparent;
+}
+
+.inicio-grid .empresa-insignia h3 {
+  margin: 0 0 8px;
+  color: #005432;
+  font-size: 17px;
+}
+
+.inicio-grid .empresa-insignia p {
+  margin: 5px 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.inicio-grid .empresa-insignia-pontuacao {
+  font-weight: 600;
+  color: #005432;
+}
+
+.inicio-grid .empresa-insignia-data {
+  font-size: 12px;
+}
+
+.empresa-sem-insignia {
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px dashed #cde5d3;
+  background: #f5faf6;
+}
+
+.empresa-sem-insignia p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Cartão do diagnóstico */
+
+.inicio-grid .ultimo-diagnostico {
+  margin: 0 0 22px;
+}
+
+.ultimo-diagnostico h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: #172d3d;
+}
+
+.inicio-diagnostico-pontuacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 170px;
+  padding: 22px;
+  margin-bottom: 20px;
+  background: #f0f8f2;
+  border: 1px solid #dcece0;
+  border-radius: 12px;
+}
+
+.inicio-diagnostico-pontuacao > span {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.inicio-pontuacao-valor {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.inicio-pontuacao-valor strong {
+  color: #005432;
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -2px;
+}
+
+.inicio-pontuacao-valor span {
+  color: #64748b;
+  font-size: 18px;
+}
+
+.inicio-diagnostico-nivel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.inicio-diagnostico-nivel strong {
+  padding: 5px 12px;
+  background: #dcefe0;
+  border-radius: 20px;
+  color: #005432;
+}
+
+/* Estado sem diagnóstico */
+
+.inicio-sem-diagnostico {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 22px;
+  background: #f5faf6;
+  border: 1px dashed #cde5d3;
+  border-radius: 12px;
+  text-align: center;
+  color: #168443;
+}
+
+.inicio-sem-diagnostico h3 {
+  margin: 16px 0 8px;
+}
+
+.inicio-sem-diagnostico p {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Botões */
+
+.inicio-botao-secundario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px;
+  background: #ffffff;
+  color: #005432;
+  border: 1px solid #168443;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.inicio-botao-secundario:hover {
+  background: #e7f4e9;
+}
+
+.inicio-grid .cartao-logado .botao-principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 12px 16px;
+  background: #005432;
+  color: #ffffff;
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inicio-grid .cartao-logado .botao-principal:hover {
+  background: #003f29;
+}
+
+.inicio-grid .cartao-logado .botao-principal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsividade */
+
+@media (max-width: 1100px) {
+  .layout .inicio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .inicio-boas-vindas {
+    padding: 26px;
+    min-height: 210px;
+  }
+
+  .inicio-boas-vindas-texto {
+    width: 100%;
+  }
+
+  .inicio-boas-vindas::before {
+    width: 100%;
+    border-radius: 0;
+    opacity: 0.12;
+  }
+
+  .inicio-boas-vindas::after {
+    display: none;
+  }
+
+  .inicio-grid .tarjeta-empresa,
+  .inicio-grid .cartao-logado {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inicio-boas-vindas {
+    padding: 22px;
+  }
+
+  .inicio-grid .empresa-datos div {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .inicio-grid .empresa-datos dd {
+    text-align: left;
+  }
+
+  .inicio-grid .empresa-insignia {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

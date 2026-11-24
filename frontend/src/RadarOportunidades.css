@@ -1,144 +1,183 @@
 .radar-oportunidades {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
   width: 100%;
+  min-width: 0;
   padding-bottom: 24px;
+  color: var(--cor-texto);
 }
-
 .radar-cabecalho {
-  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 32px;
+  border-radius: var(--raio-card);
+  background: linear-gradient(115deg, #063f35, #005432);
+  color: white;
 }
-
+.radar-cabecalho::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -75px;
+  bottom: -155px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: #a3e5b2;
+  opacity: .12;
+}
+.radar-cabecalho-icone {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #ffffff18;
+  color: #bde5c6;
+}
+.radar-banner-etiqueta {
+  display: block;
+  margin-bottom: 9px;
+  color: #bde5c6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
 .radar-cabecalho h1 {
-  font-size: 28px;
-  color: #1f2937;
   margin: 0 0 10px;
+  color: white;
+  font-size: clamp(24px, 3vw, 32px);
 }
-
 .radar-cabecalho p {
-  color: #64748b;
-  font-size: 15px;
-  line-height: 1.6;
+  max-width: 680px;
   margin: 0;
+  color: #e0eee6;
+  font-size: 14px;
+  line-height: 1.7;
 }
-
-.radar-categoria {
-  margin-bottom: 32px;
-}
-
 .radar-categoria h2 {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 19px;
-  color: #1f2937;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-size: 20px;
+  color: var(--cor-texto);
 }
-
+.radar-categoria-icone {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #e7f4e9;
+  color: #087d39;
+}
 .radar-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, 280px), 1fr)
-  );
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
-
+.radar-card:only-child { grid-column: 1 / -1; }
 .radar-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
   padding: 24px;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-  transition: box-shadow 0.2s, transform 0.2s;
+  background: white;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  box-shadow: var(--sombra-card);
+  transition: box-shadow .2s, transform .2s;
 }
-
 .radar-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 26px #172d3d12;
 }
-
 .radar-etiqueta {
-  background-color: #e8f5ec;
-  color: #237a43;
-  font-size: 12px;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 5px 10px;
-  border-radius: 6px;
-  margin-bottom: 14px;
+  border-radius: 20px;
+  background: #e7f4e9;
+  color: #005432;
+  font-size: 11px;
+  font-weight: 600;
 }
-
+.radar-etiqueta::before { content: '✓'; }
 .radar-card h3 {
-  font-size: 19px;
-  color: #1f2937;
-  margin: 0 0 6px;
+  margin: 4px 0 0;
+  color: var(--cor-texto);
+  font-size: 20px;
+  line-height: 1.4;
 }
-
 .radar-subtitulo {
   font-size: 13px;
   font-weight: 600;
-  color: #64748b;
+  color: #087d39;
 }
-
 .radar-card p {
+  margin: 0 0 6px;
   color: #475569;
   font-size: 14px;
   line-height: 1.7;
-  margin: 14px 0;
 }
-
 .radar-orientacao {
-  color: #64748b;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: #f5f7f6;
+  border-radius: 8px;
+  color: #475569;
   font-size: 12px;
-  margin-bottom: 16px;
+  line-height: 1.6;
 }
-
 .radar-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #237a43;
-  color: #ffffff;
-  text-decoration: none;
+  gap: 12px;
+  min-height: 44px;
+  padding: 11px 17px;
+  margin-top: auto;
+  background: #005432;
+  border-radius: 9px;
+  color: white;
   font-size: 14px;
   font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin-top: auto;
-  transition: background-color 0.2s;
+  text-decoration: none;
+  transition: background .2s;
 }
-
-.radar-link:hover {
-  background-color: #195c32;
-  color: #ffffff;
-}
-
-.radar-link:focus-visible {
-  outline: 2px solid #237a43;
-  outline-offset: 4px;
-}
-
+.radar-link:hover { background: #003f29; color: white; }
+.radar-link:focus-visible { outline: 2px solid #168443; outline-offset: 4px; }
 .radar-aviso {
-  padding: 16px 20px;
-  background-color: #f1f5f9;
-  border-left: 4px solid #237a43;
-  border-radius: 8px;
+  padding: 18px 22px;
+  background: #e7f4e9;
+  border: 1px solid #cde5d3;
+  border-left: 4px solid #168443;
+  border-radius: 12px;
+  color: #005432;
   font-size: 13px;
-  color: #475569;
-  line-height: 1.6;
+  line-height: 1.7;
 }
-
+@media (max-width: 1000px) {
+  .radar-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 600px) {
-  .radar-cabecalho h1 {
-    font-size: 24px;
-  }
-
-  .radar-card {
-    padding: 18px;
-  }
-
-  .radar-grid {
-    grid-template-columns: 1fr;
-  }
+  .radar-oportunidades { gap: 20px; }
+  .radar-cabecalho { padding: 22px; align-items: flex-start; gap: 12px; }
+  .radar-cabecalho-icone { width: 44px; height: 44px; }
+  .radar-cabecalho-icone svg { width: 24px; height: 24px; }
+  .radar-card { padding: 18px; }
+  .radar-link { width: 100%; }
+  .radar-categoria h2 { font-size: 17px; }
 }

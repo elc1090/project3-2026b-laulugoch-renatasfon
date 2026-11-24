@@ -237,178 +237,6 @@
 }
 
 /* =========================================================
-   Layout com menu lateral
-   ========================================================= */
-.layout {
-  min-height: 100vh;
-  display: flex;
-  background: #f5f7f8;
-}
-
-.layout-corpo {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.layout-conteudo {
-  flex: 1;
-}
-
-.layout-conteudo .diagnostico-container {
-  min-height: auto;
-}
-
-.menu-lateral {
-  width: 240px;
-  flex-shrink: 0;
-  background: #172d3d;
-  border-right: 1px solid var(--cor-borda-fundo);
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  padding: 28px 18px;
-  gap: 28px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
-
-.menu-lateral-topo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.menu-empresa {
-  color: #64717d;
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.menu-lateral-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-
-.menu-lateral-nav button {
-  border: none;
-  background: transparent;
-  color: #c9d4dc;              
-  text-align: left;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.menu-lateral-nav button:hover:not(:disabled):not(.ativo) {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-.menu-lateral-nav button.ativo {
-  background: var(--cor-marca);   
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.menu-lateral-nav button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.menu-sair {
-  border: 1px solid var(--cor-marca);
-  background: transparent;
-  color: var(--cor-marca);
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.menu-sair:hover {
-  background: var(--cor-marca);
-  color: #ffffff;
-}
-
-/* =========================================================
-   Barra de progresso horizontal (etapas)
-   ========================================================= */
-.barra-etapas {
-  list-style: none;
-  margin: 0;
-  padding: 18px 32px;
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border-bottom: 1px solid #e6ebef;
-}
-
-.etapa {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  color: #8a949e;
-  font-size: 13px;
-}
-
-.etapa:not(:last-child)::after {
-  content: '';
-  flex: 1;
-  height: 2px;
-  margin: 0 12px;
-  background: #e6ebef;
-}
-
-.etapa.concluida:not(:last-child)::after {
-  background: #246b59;
-}
-
-.etapa-numero {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #e6ebef;
-  font-weight: 700;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-.etapa.atual {
-  color: #172d3d;
-  font-weight: 700;
-}
-
-.etapa.concluida {
-  color: #246b59;
-}
-
-.etapa.atual .etapa-numero,
-.etapa.concluida .etapa-numero {
-  background: #246b59;
-  color: #ffffff;
-}
-
-/* =========================================================
    Mi Plan
    ========================================================= */
 .plano-lista {
@@ -573,10 +401,11 @@
    Responsivo
    ========================================================= */
 @media (max-width: 860px) {
-  .layout {
-    flex-direction: column;
+  .inicio-grid {
+    grid-template-columns: 1fr;
+    padding: 20px 12px;
   }
-
+}
   .menu-lateral {
     width: 100%;
     height: auto;
@@ -611,7 +440,7 @@
     grid-template-columns: 1fr;
     padding: 20px 12px;
   }
-}
+
 
 @media (max-width: 600px) {
   .diagnostico-container {

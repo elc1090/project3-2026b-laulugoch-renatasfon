@@ -1,4 +1,5 @@
 import './RadarOportunidades.css'
+import IconeMenu from './components/IconeMenu'
 
 type Oportunidade = {
   titulo: string
@@ -17,7 +18,7 @@ type Categoria = {
 const categorias: Categoria[] = [
   {
     titulo: 'Fondos de Financiamiento',
-    icone: '💰',
+    icone: 'progresso',
     oportunidades: [
       {
         titulo: 'Sercotec',
@@ -39,7 +40,7 @@ const categorias: Categoria[] = [
   },
   {
     titulo: 'Normativas Actualizadas',
-    icone: '📋',
+    icone: 'diagnostico',
     oportunidades: [
       {
         titulo: 'Oficina de Economía Circular y Ley REP',
@@ -52,7 +53,7 @@ const categorias: Categoria[] = [
   },
   {
     titulo: 'Noticias y Recursos de Sostenibilidad',
-    icone: '🌱',
+    icone: 'radar',
     oportunidades: [
       {
         titulo: 'Ministerio del Medio Ambiente',
@@ -76,13 +77,19 @@ export default function RadarOportunidades() {
   return (
     <section className="radar-oportunidades">
       <header className="radar-cabecalho">
-        <h1>Radar de Oportunidades</h1>
+        <div className="radar-cabecalho-icone">
+          <IconeMenu nome="radar" tamanho={32} />
+        </div>
+        <div className="radar-cabecalho-texto">
+          <span className="radar-banner-etiqueta">CRECE DE FORMA SOSTENIBLE</span>
+          <h1>Radar de Oportunidades</h1>
 
         <p>
           Descubre oportunidades de financiamiento, normativas
           y recursos para impulsar el crecimiento sostenible
           de tu empresa.
         </p>
+        </div>
       </header>
 
       {categorias.map((categoria) => (
@@ -91,7 +98,9 @@ export default function RadarOportunidades() {
           key={categoria.titulo}
         >
           <h2>
-            <span aria-hidden="true">{categoria.icone}</span>
+            <span className="radar-categoria-icone" aria-hidden="true">
+              <IconeMenu nome={categoria.icone} tamanho={23} />
+            </span>
             {categoria.titulo}
           </h2>
 
@@ -125,7 +134,7 @@ export default function RadarOportunidades() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Visitar sitio oficial ↗
+                  Visitar sitio oficial <span aria-hidden="true">↗</span>
                 </a>
               </article>
             ))}

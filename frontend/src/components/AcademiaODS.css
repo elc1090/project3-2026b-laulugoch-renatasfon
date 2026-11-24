@@ -210,3 +210,46 @@
     padding: 32px 20px;
   }
 }
+
+/* Redesign EcoSME */
+.academia-container { max-width: none; padding: 0 0 24px; color: var(--cor-texto); }
+.academia-cabecalho { position: relative; overflow: hidden; padding: 30px 100px 30px 30px; margin-bottom: 22px; border-radius: var(--raio-card); background: linear-gradient(115deg,#063f35,#005432); color: white; }
+.academia-cabecalho .etiqueta { color: #bde5c6; background: transparent; padding: 0; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; }
+.academia-cabecalho h1 { color: white; margin: 10px 0; }
+.academia-cabecalho p { color: #e0eee6; margin: 0; }
+.academia-cabecalho-icone { position: absolute; right: 28px; top: 30px; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 16px; background: #ffffff18; color: #bde5c6; }
+.academia-grid { display: grid; grid-template-columns: minmax(210px, 250px) minmax(0,1fr); gap: 22px; align-items: start; }
+.academia-lateral, .academia-quiz, .academia-resultado { background: white; border: 1px solid var(--cor-borda); border-radius: var(--raio-card); box-shadow: var(--sombra-card); }
+.academia-lateral { padding: 22px; }
+.academia-lateral h2 { margin: 0 0 8px; font-size: 19px; }
+.academia-lateral p { color: #64748b; font-size: 13px; line-height: 1.6; margin: 0; }
+.academia-etapas { list-style: none; padding: 0; margin: 22px 0; display: grid; gap: 10px; }
+.academia-etapas li { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 9px; color: #64748b; font-size: 14px; }
+.academia-etapas li span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #edf1ef; font-weight: 700; flex-shrink: 0; }
+.academia-etapas .atual, .academia-etapas .concluida { background: #e7f4e9; color: #005432; }
+.academia-etapas .atual span, .academia-etapas .concluida span { background: #168443; color: white; }
+.academia-dica { padding: 15px; background: #f0f8f2; border-radius: 10px; color: #005432; }
+.academia-dica p { margin-top: 7px; }
+.academia-quiz { min-width: 0; padding: 28px; }
+.academia-barra { background: #e0e7e2; height: 10px; }
+.academia-barra-preenchimento { background: #168443; }
+.academia-alternativa { align-items: center; background: #f8faf9; border-color: #dce5e0; }
+.academia-alternativa strong { display: grid; place-items: center; width: 34px; height: 34px; background: #e7f4e9; color: #005432; border-radius: 8px; }
+.academia-alternativa:not(:disabled):hover { border-color: #168443; background: #f0f8f2; }
+.academia-alternativa.correta strong { background: #168443; color: white; }
+.academia-alternativa.incorreta strong { background: #a32d2d; color: white; }
+.academia-feedback.acerto h3 { color: #005432; }
+.academia-feedback.erro h3 { color: #a32d2d; }
+.academia-container .botao-principal { width: auto; min-height: 46px; padding: 12px 22px; border: 1px solid #005432; border-radius: 9px; background: #005432; color: white; font-weight: 600; cursor: pointer; }
+.academia-container .botao-principal:hover:not(:disabled) { background: #003f29; }
+.academia-container .botao-principal:disabled { opacity: .6; cursor: not-allowed; }
+.academia-resultado { max-width: 760px; margin: 0 auto; }
+.academia-insignia { display: grid; place-items: center; width: 112px; height: 112px; margin: 0 auto 20px; background: #e7f4e9; border-radius: 50%; }
+.academia-resultado > p { color: #64748b; line-height: 1.6; }
+.academia-pontuacao { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 300px; margin: 24px auto; padding: 22px; background: #063f35; color: #e0eee6; border-radius: 14px; }
+.academia-pontuacao strong { color: white; font-size: 48px; line-height: 1; }
+.academia-pontuacao small { font-size: 22px; color: #bde5c6; }
+.academia-conquista { background: #f0f8f2; border-color: #cde5d3; }
+.academia-conquista h3 { color: #005432; }
+@media (max-width: 1050px) { .academia-grid { grid-template-columns: 1fr; } .academia-etapas { grid-template-columns: repeat(5,minmax(0,1fr)); } .academia-etapas li { flex-direction: column; text-align: center; } }
+@media (max-width: 650px) { .academia-cabecalho { padding: 22px; } .academia-cabecalho-icone { display: none; } .academia-quiz, .academia-lateral { padding: 18px; } .academia-etapas { gap: 4px; } .academia-etapas li { padding: 6px 2px; font-size: 11px; } .academia-container .botao-principal { width: 100%; } }

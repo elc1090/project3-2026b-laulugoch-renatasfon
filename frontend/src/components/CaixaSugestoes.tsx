@@ -56,16 +56,22 @@ function CaixaSugestoes() {
         aria-expanded={aberto}
         aria-label={aberto ? 'Cerrar sugerencias' : 'Abrir buzón de sugerencias'}
       >
-        {aberto ? '✕' : '💬'}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          {aberto ? <path d="M6 6l12 12M18 6L6 18" /> : <><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.5-4A8.5 8.5 0 1 1 21 11.5Z" /><path d="M8 10h9M8 14h6" /></>}
+        </svg>
       </button>
 
       {aberto && (
         <section className="caixa-sugestoes-painel">
-          <h2>Buzón de Sugerencias</h2>
-          <p>Tu opinión nos ayuda a mejorar EcoSME.</p>
+          <header className="caixa-sugestoes-cabecalho">
+            <span>AYÚDANOS A MEJORAR</span>
+            <h2>Buzón de Sugerencias</h2>
+            <p>Tu opinión nos ayuda a mejorar EcoSME.</p>
+          </header>
 
           {sucesso ? (
-            <div role="status">
+            <div role="status" className="caixa-sugestoes-sucesso">
+              <span aria-hidden="true">✓</span>
               <p>¡Gracias por compartir tu opinión!</p>
               <button
                 type="button"
@@ -98,7 +104,7 @@ function CaixaSugestoes() {
               </fieldset>
 
               <label htmlFor="comentario-sugestao">
-                Comentarios o sugerencias
+                Comentarios o sugerencias (opcional)
               </label>
 
               <textarea
@@ -110,6 +116,8 @@ function CaixaSugestoes() {
                 maxLength={1000}
                 disabled={enviando}
               />
+
+              <small className="caixa-sugestoes-contador">{comentario.length}/1000</small>
 
               {erro && (
                 <p className="mensagem mensagem-erro" role="alert">

@@ -5,6 +5,7 @@ import { API_URL } from './api'
 import type { TamanhoEmpresa, Usuario } from './types'
 import AreaLogada from './AreaLogada'
 import Logo from './components/logo'
+import './Login.css'
 
 type Modo = 'login' | 'cadastro'
 
@@ -271,13 +272,13 @@ function App() {
 
         <div className="apresentacao-conteudo">
           <span className="etiqueta">
-            Tu empresa, en evolución
+            Tu empresa en constante evolución
           </span>
 
           <h1>
             Conoce tu negocio.
             <br />
-            Descubre cómo mejorar.
+            Descubre cómo mejorarlo.
           </h1>
 
           <p>
