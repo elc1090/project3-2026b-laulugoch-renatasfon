@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { apiFetch, ApiError, mensagemDeErro } from '../api'
 import { LIMITE_PLANO, NOME_DIMENSAO, ehDimensaoAtiva } from '../dimensoes'
+import IconeMenu from './IconeMenu'
+import '../MiPlan.css'
 import type {
   ItemPlano,
   Plano,
@@ -205,16 +207,32 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
   }
 
   return (
-    <div className="diagnostico-container">
-      <header className="resultado-cabecalho">
-        <p>EcoSME</p>
-        <h1>Mi Plan de Acción</h1>
-        <p>
-          {mostrarIA
-            ? 'Recomendaciones personalizadas para mejorar la sostenibilidad de tu empresa.'
-            : `Acciones sugeridas para las dimensiones con menos de ${LIMITE_PLANO} puntos.`}
-        </p>
+    <div className="mi-plan">
+      <header className="mi-plan-cabecalho">
+        <span className="mi-plan-icone">
+          <IconeMenu nome="plano" tamanho={28} />
+        </span>
+        <div>
+          <h1>Mi Plan de Acción</h1>
+          <p>
+            {mostrarIA
+              ? 'Recomendaciones personalizadas para mejorar la sostenibilidad de tu empresa.'
+              : `Acciones sugeridas para las dimensiones con menos de ${LIMITE_PLANO} puntos.`}
+          </p>
+        </div>
       </header>
+
+      <section className="mi-plan-banner">
+        <div>
+          <span className="mi-plan-etiqueta">DE LOS RESULTADOS A LA ACCIÓN</span>
+          <h2>Construye un futuro más sostenible</h2>
+          <p>
+            Descubre acciones concretas para mejorar las prácticas de tu empresa
+            y avanzar hacia tus objetivos de sostenibilidad.
+          </p>
+        </div>
+        <IconeMenu nome="progresso" tamanho={76} />
+      </section>
 
       <section className="plano-lista">
 
@@ -244,6 +262,21 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
           <>
             {/* BOTÕES DE CONTROLE */}
             <div className="plano-ia-controles">
+              <div className="mi-plan-ia-cabecalho">
+                <span className="mi-plan-ia-icone">
+                  <svg width="26" height="26" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" strokeWidth="1.7"
+                    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 3L14.5 9.5L21 12L14.5 14.5L12 21L9.5 14.5L3 12L9.5 9.5Z" />
+                    <path d="M19 2V6M17 4H21" />
+                  </svg>
+                </span>
+                <div>
+                  <h2>Inteligencia Artificial</h2>
+                  <p>Obtén recomendaciones personalizadas a partir del diagnóstico de tu empresa.</p>
+                </div>
+              </div>
+
 
               {!mostrarIA && recomendacoes.length === 0 && (
                  <button
@@ -283,7 +316,7 @@ function MeuPlano({ onSair, onIrParaDiagnostico }: Props) {
               {planosAnteriores.length > 0 && (
                 <button
                   type="button"
-                  className="botao-principal"
+                  className="mi-plan-botao-historico"
                   onClick={() => setMostrarHistorico(!mostrarHistorico)}
                   disabled={gerandoIA}
                 >

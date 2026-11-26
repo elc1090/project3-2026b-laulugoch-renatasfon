@@ -1,25 +1,59 @@
 import type { ReactNode } from 'react'
 import Logo from './logo'
 import CaixaSugestoes from './CaixaSugestoes'
+import IconeMenu from './IconeMenu'
+import './Layout.css'
 
 export type Tela =
   | 'inicio'
   | 'diagnostico'
   | 'resultado'
   | 'plano'
-  | 'acompanhamento'
   | 'academia'
   | 'radar'
 
-const ETAPAS: { tela: Tela; rotulo: string; exigeResultado: boolean }[] = [
-  { tela: 'inicio', rotulo: 'Mi Empresa', exigeResultado: false },
-  { tela: 'diagnostico', rotulo: 'Diagnóstico', exigeResultado: false },
-  { tela: 'resultado', rotulo: 'Resultado', exigeResultado: true },
-  { tela: 'plano', rotulo: 'Mi Plan', exigeResultado: true },
-  { tela: 'acompanhamento', rotulo: 'Seguimiento', exigeResultado: true },
-  { tela: 'academia', rotulo: 'Academia ODS', exigeResultado: false },
-  { tela: 'radar', rotulo: 'Radar de Oportunidades', exigeResultado: false },
+const MENU: {
+  tela: Tela
+  rotulo: string
+  exigeResultado: boolean
+}[] = [
+  {
+    tela: 'inicio',
+    rotulo: 'Mi Empresa',
+    exigeResultado: false,
+  },
+  {
+    tela: 'diagnostico',
+    rotulo: 'Diagnóstico',
+    exigeResultado: false,
+  },
+  {
+    tela: 'resultado',
+    rotulo: 'Resultado',
+    exigeResultado: true,
+  },
+  {
+    tela: 'plano',
+    rotulo: 'Mi Plan',
+    exigeResultado: true,
+  },
+  {
+    tela: 'academia',
+    rotulo: 'Academia ODS',
+    exigeResultado: false,
+  },
+  {
+    tela: 'radar',
+    rotulo: 'Radar de Oportunidades',
+    exigeResultado: false,
+  },
 ]
+
+const ETAPAS = MENU.filter(
+  (item) =>
+    item.tela !== 'academia' &&
+    item.tela !== 'radar',
+)
 
 type Props = {
   nomeEmpresa: string
@@ -38,68 +72,167 @@ function Layout({
   onSair,
   children,
 }: Props) {
-  const indiceAtual = ETAPAS.findIndex((etapa) => etapa.tela === telaAtual)
+  const indiceAtual = ETAPAS.findIndex(
+    (etapa) => etapa.tela === telaAtual,
+  )
+
+  const paginaAtual = MENU.find(
+    (item) => item.tela === telaAtual,
+  )
 
   return (
     <div className="layout">
       <aside className="menu-lateral">
         <div className="menu-lateral-topo">
-          <Logo tamanho={80}/>
-          <span className="menu-empresa" title={nomeEmpresa}>
+          <Logo tamanho={80} />
+
+          <span
+            className="menu-empresa"
+            title={nomeEmpresa}
+          >
             {nomeEmpresa}
           </span>
         </div>
 
-        <nav className="menu-lateral-nav" aria-label="Menú principal">
-          {ETAPAS.map((etapa) => {
-            const desabilitada = etapa.exigeResultado && !temResultado
+        <nav
+          className="menu-lateral-nav"
+          aria-label="Menú principal"
+        >
+          {MENU.map((item) => {
+            const desabilitada =
+              item.exigeResultado && !temResultado
 
             return (
               <button
-                key={etapa.tela}
+                key={item.tela}
                 type="button"
-                className={etapa.tela === telaAtual ? 'ativo' : ''}
+                className={
+                  item.tela === telaAtual ? 'ativo' : ''
+                }
                 disabled={desabilitada}
-                aria-current={etapa.tela === telaAtual ? 'page' : undefined}
-                onClick={() => onNavegar(etapa.tela)}
+                aria-current={
+                  item.tela === telaAtual
+                    ? 'page'
+                    : undefined
+                }
+                onClick={() => onNavegar(item.tela)}
               >
-                {etapa.rotulo}
+                <IconeMenu nome={item.tela} />
+                <span>{item.rotulo}</span>
               </button>
             )
           })}
         </nav>
 
-        <button type="button" className="menu-sair" onClick={onSair}>
+        <div
+          className="menu-decoracao"
+          aria-hidden="true"
+        >
+          <span />
+          <span />
+        </div>
+
+        <button
+          type="button"
+          className="menu-sair"
+          onClick={onSair}
+        >
+          <IconeMenu nome="sair" />
           Cerrar sesión
         </button>
       </aside>
 
       <div className="layout-corpo">
-        <ol className="barra-etapas" aria-label="Tu recorrido en la plataforma">
-          {ETAPAS.map((etapa, indice) => {
-            const estado =
-              indice < indiceAtual
-                ? 'concluida'
-                : indice === indiceAtual
-                  ? 'atual'
-                  : ''
+        <header className="layout-cabecalho">
+          <div>
+            <span className="layout-pagina-atual">
+              {paginaAtual?.rotulo}
+            </span>
 
-            return (
-              <li
-                key={etapa.tela}
-                className={`etapa ${estado}`}
-                aria-current={indice === indiceAtual ? 'step' : undefined}
-              >
-                <span className="etapa-numero">
-                  {indice < indiceAtual ? '✓' : indice + 1}
-                </span>
-                <span className="etapa-rotulo">{etapa.rotulo}</span>
-              </li>
-            )
-          })}
-        </ol>
+            {telaAtual === 'inicio' && (
+              <h1>Panel de Gestión Sostenible</h1>
+            )}
+          </div>
 
-        <main className="layout-conteudo">{children}</main>
+          <div className="layout-identificacao">
+            <IconeMenu nome="inicio" tamanho={19} />
+            <span>{nomeEmpresa}</span>
+          </div>
+        </header>
+      
+      {telaAtual === 'inicio' && (
+        <section className="inicio-boas-vindas">
+          <div className="inicio-boas-vindas-texto">
+            <span className="inicio-boas-vindas-etiqueta">
+              TU EMPRESA EN CONSTANTE EVOLUCIÓN
+            </span>
+
+            <h2>¡Bienvenido(a) a EcoSME!</h2>
+
+             <p>
+                Estamos aquí para acompañarte en el camino
+                hacia una empresa más sostenible.
+            </p>
+
+             <p>
+                Conoce tu negocio, descubre oportunidades
+                de mejora y transforma tus acciones en un
+                impacto positivo.
+             </p>
+           </div>
+         </section>
+       )}
+
+        {indiceAtual >= 0 && (
+          <section className="progresso-painel">
+            <div className="progresso-titulo">
+              <span className="progresso-icone">
+                <IconeMenu nome="progresso" />
+              </span>
+              <strong>Tu progreso</strong>
+            </div>
+
+            <ol
+              className="barra-etapas"
+              aria-label="Tu recorrido en la plataforma"
+            >
+              {ETAPAS.map((etapa, indice) => {
+                const estado =
+                  indice < indiceAtual
+                    ? 'concluida'
+                    : indice === indiceAtual
+                      ? 'atual'
+                      : ''
+
+                return (
+                  <li
+                    key={etapa.tela}
+                    className={`etapa ${estado}`}
+                    aria-current={
+                      indice === indiceAtual
+                        ? 'step'
+                        : undefined
+                    }
+                  >
+                    <span className="etapa-numero">
+                      {indice < indiceAtual
+                        ? '✓'
+                        : indice + 1}
+                    </span>
+
+                    <span className="etapa-rotulo">
+                      {etapa.rotulo}
+                    </span>
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        )}
+
+        <main className="layout-conteudo">
+          {children}
+        </main>
       </div>
 
       <CaixaSugestoes />

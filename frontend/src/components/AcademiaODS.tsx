@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { apiFetch, mensagemDeErro } from '../api'
 import './AcademiaODS.css'
+import IconeMenu from './IconeMenu'
 
 type PerguntaQuiz = {
   enunciado: string
@@ -136,7 +137,14 @@ function AcademiaODS() {
     return (
       <section className="academia-container">
         <div className="academia-resultado">
-          <span className="academia-insignia">🏅</span>
+          <span className="academia-insignia" aria-hidden="true">
+            <svg width="76" height="76" viewBox="0 0 80 80" fill="none">
+              <path d="M24 45L17 72L32 65L40 75L48 65L63 72L56 45" fill="#168443" />
+              <circle cx="40" cy="32" r="27" fill="#dcefe0" stroke="#168443" strokeWidth="3" />
+              <path d="M28 45C25 25 43 17 55 18C56 37 44 47 28 45Z" fill="#168443" />
+              <path d="M25 49L47 27" stroke="#005432" strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
+          </span>
 
           <h1>¡Felicitaciones!</h1>
 
@@ -144,9 +152,11 @@ function AcademiaODS() {
             Has completado el módulo educativo de Academia ODS.
           </p>
 
-          <h2>
-            Tu resultado: {acertos} de {PERGUNTAS.length} respuestas correctas
-          </h2>
+          <div className="academia-pontuacao">
+            <span>Tu resultado</span>
+            <strong>{acertos}<small>/{PERGUNTAS.length}</small></strong>
+            <span>Respuestas correctas</span>
+          </div>
 
           {salvo && (
             <div className="academia-conquista">
@@ -175,7 +185,8 @@ function AcademiaODS() {
   return (
     <section className="academia-container">
       <header className="academia-cabecalho">
-        <span className="etiqueta">Aprendizaje sostenible</span>
+        <span className="academia-cabecalho-icone"><IconeMenu nome="academia" tamanho={38} /></span>
+        <span className="etiqueta">APRENDIZAJE SOSTENIBLE</span>
 
         <h1>Academia ODS</h1>
 
@@ -185,6 +196,20 @@ function AcademiaODS() {
         </p>
       </header>
 
+      <div className="academia-grid">
+        <aside className="academia-lateral">
+          <h2>Tu aprendizaje</h2>
+          <p>Completa las {PERGUNTAS.length} preguntas del módulo.</p>
+          <ol className="academia-etapas">
+            {PERGUNTAS.map((_, indice) => (
+              <li key={indice} className={indice < indicePergunta || (indice === indicePergunta && respondeu) ? 'concluida' : indice === indicePergunta ? 'atual' : ''}>
+                <span>{indice < indicePergunta || (indice === indicePergunta && respondeu) ? '✓' : indice + 1}</span>
+                Pregunta {indice + 1}
+              </li>
+            ))}
+          </ol>
+          <div className="academia-dica"><strong>Explorador ODS</strong><p>Completa el módulo para desbloquear tu insignia.</p></div>
+        </aside>
       <div className="academia-quiz">
         <div className="academia-progresso">
           <span>
@@ -270,6 +295,7 @@ function AcademiaODS() {
             </button>
           </div>
         )}
+      </div>
       </div>
     </section>
   )
