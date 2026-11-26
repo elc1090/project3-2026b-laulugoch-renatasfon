@@ -1,7 +1,7 @@
 # Projeto final
 
 
-![Substitua a imagem ao lado por um GIF/WEBP animado mostrando seu projeto](./moho_follow_through2.gif "GIF animado do projeto. Imagem temporária de Moho Animation https://moho.lostmarble.com/products/moho-pro-special-halls-head-college")
+<img width="800" height="451" alt="ecosme" src="https://github.com/user-attachments/assets/ba04aa10-3181-43b9-893b-fae55dd55d71" />
 
 
 
